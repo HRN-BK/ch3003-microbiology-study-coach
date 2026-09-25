@@ -1,0 +1,6 @@
+# course materials extracted from slides/papers (copyrighted) — keep local only
+work/
+# build inspection output
+data/
+__pycache__/
+.DS_Store

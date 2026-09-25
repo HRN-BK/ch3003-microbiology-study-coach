@@ -1,0 +1,1094 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Gram+ Vi Sinh</title>
+<meta name="description" content="Huấn luyện viên ôn thi cuối kì CH3003 Vi sinh vật học">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --ground:#F4F4F8; --surface:#FFFFFF; --sunk:#EAEAF2; --line:#D9D9E6;
+  --ink:#1B1C2A; --ink2:#55576B; --ink3:#8A8CA0;
+  --hema:#3A3F94; --hema-soft:#E3E4F5; --eosin:#C8406F; --eosin-soft:#F8E1EA;
+  --good:#1F7A4D; --good-soft:#DDF1E6; --bad:#B3261E; --bad-soft:#F9E0DE; --warn:#9A6400; --warn-soft:#F7ECD6;
+  --cb:#3A3F94; --gn:#C8406F;
+  --display:"Bricolage Grotesque", "Be Vietnam Pro", system-ui, sans-serif;
+  --body:"Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#12131C; --surface:#1B1C28; --sunk:#242534; --line:#34364A;
+    --ink:#E8E8F2; --ink2:#AEB0C4; --ink3:#7E8097;
+    --hema:#9CA2F2; --hema-soft:#2A2D55; --eosin:#F08BAE; --eosin-soft:#4A2334;
+    --good:#6FD39F; --good-soft:#1C3A2B; --bad:#F2918A; --bad-soft:#452320; --warn:#E8B75C; --warn-soft:#3D2F14;
+    --cb:#9CA2F2; --gn:#F08BAE;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#12131C; --surface:#1B1C28; --sunk:#242534; --line:#34364A;
+  --ink:#E8E8F2; --ink2:#AEB0C4; --ink3:#7E8097;
+  --hema:#9CA2F2; --hema-soft:#2A2D55; --eosin:#F08BAE; --eosin-soft:#4A2334;
+  --good:#6FD39F; --good-soft:#1C3A2B; --bad:#F2918A; --bad-soft:#452320; --warn:#E8B75C; --warn-soft:#3D2F14;
+  --cb:#9CA2F2; --gn:#F08BAE;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--ground)}
+body{color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:720px;margin:0 auto}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,.term:focus-visible{outline:2px solid var(--hema);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+.mono{font-family:var(--mono)}
+.muted{color:var(--ink2)}
+.small{font-size:13px}
+.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ground);padding-block:12px 10px;display:flex;align-items:center;gap:12px}
+.brand{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;background:none;border:0;padding:0}
+.brand i{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--eosin) 0 38%,var(--hema) 40% 100%);display:inline-block}
+.top .sp{flex:1}
+.iconbtn{min-width:44px;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;font-size:14px}
+.progress{height:6px;background:var(--sunk);border-radius:6px;overflow:hidden}
+.progress>b{display:block;height:100%;background:linear-gradient(90deg,var(--hema),var(--eosin));width:0;transition:width .3s}
+
+/* home */
+.hero{padding-block:24px 8px;display:grid;gap:18px}
+.count{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.count .n{font-family:var(--display);font-weight:800;font-size:64px;line-height:1;color:var(--hema);font-variant-numeric:tabular-nums}
+.count .t{font-size:17px;color:var(--ink2)}
+.go{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;border:0;border-radius:20px;padding:22px 24px;background:var(--hema);color:#fff;text-align:left;box-shadow:0 10px 30px -12px color-mix(in srgb,var(--hema) 70%,transparent)}
+:root[data-theme="dark"] .go{color:#12131C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .go{color:#12131C}}
+.go .big{font-family:var(--display);font-weight:800;font-size:28px;line-height:1.1}
+.go .sub{font-size:14px;opacity:.85;margin-top:4px}
+.go .arrow{font-size:30px;font-weight:700}
+.go:hover{filter:brightness(1.06)}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:grid;gap:10px}
+.plan ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.plan li{display:flex;gap:10px;align-items:flex-start}
+.tag{flex:none;font-size:11px;font-weight:700;letter-spacing:.06em;border-radius:6px;padding:2px 7px;margin-top:3px;font-family:var(--mono)}
+.tag.cb{background:var(--hema-soft);color:var(--cb)}
+.tag.gn{background:var(--eosin-soft);color:var(--gn)}
+.tag.x{background:var(--sunk);color:var(--ink2)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;min-width:0;text-align:left}
+.stat .v{font-family:var(--display);font-weight:800;font-size:26px;font-variant-numeric:tabular-nums}
+.linkbtn{background:none;border:0;color:var(--hema);font-weight:600;padding:8px 0;min-height:44px}
+.second{width:100%;min-height:52px;border-radius:14px;border:1.5px solid var(--hema);background:transparent;color:var(--hema);font-weight:600}
+
+/* session */
+.sesshead{display:grid;gap:8px;padding-block:4px 14px}
+.sesshead .row{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;background:var(--sunk);color:var(--ink2)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 20px;display:grid;gap:16px}
+.card h2{font-size:24px}
+.hook{background:linear-gradient(160deg,var(--eosin-soft),var(--hema-soft));border:0}
+.hook .q{font-size:18px;line-height:1.6}
+.stem{font-size:17px;line-height:1.6;white-space:pre-wrap}
+.stem pre,.pre{font-family:var(--mono);font-size:13px;background:var(--sunk);border-radius:10px;padding:10px 12px;overflow-x:auto;white-space:pre;margin:4px 0}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;min-height:52px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);line-height:1.45}
+.opt .k{flex:none;width:26px;height:26px;border-radius:8px;background:var(--sunk);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:600}
+.opt:hover:not([disabled]){border-color:var(--hema)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.pick{border-color:var(--hema);background:var(--hema-soft)}
+.guess{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink2);min-height:44px}
+.guess input{width:20px;height:20px}
+.fb{border-radius:14px;padding:14px 16px;display:grid;gap:10px}
+.fb.ok{background:var(--good-soft)}
+.fb.no{background:var(--bad-soft)}
+.fb .h{font-weight:700}
+.fb.ok .h{color:var(--good)} .fb.no .h{color:var(--bad)}
+.note{font-size:14px;background:var(--warn-soft);border-radius:10px;padding:8px 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.vchip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 10px;font-size:13px;min-height:32px}
+details summary{cursor:pointer;font-weight:600;min-height:32px}
+ol.steps{margin:6px 0 0;padding-left:22px;display:grid;gap:4px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{min-height:48px;border-radius:12px;padding:0 20px;border:0;background:var(--hema);color:var(--surface);font-weight:600}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.btn.bad{background:var(--bad)}
+.btn.good{background:var(--good)}
+.btn.wide{flex:1}
+.gloss{font-size:14px;color:var(--ink2);border-left:3px solid var(--eosin);padding-left:10px}
+.term{border-bottom:1.5px dotted var(--hema);cursor:help}
+.tip{position:fixed;z-index:30;max-width:min(340px,calc(100vw - 32px));background:var(--ink);color:var(--ground);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.45;box-shadow:0 12px 30px -10px rgba(0,0,0,.4);display:grid;gap:6px}
+.tip b{font-size:15px}
+.tip .vi{color:var(--eosin-soft)}
+.tip button{justify-self:start;border:1px solid color-mix(in srgb,var(--ground) 40%,transparent);background:transparent;color:var(--ground);border-radius:8px;padding:4px 10px;font-size:13px;min-height:32px}
+.flip{min-height:190px;display:grid;place-items:center;text-align:center;font-size:20px;border-radius:16px;border:1.5px dashed var(--line);padding:20px;background:var(--surface);width:100%}
+.flip .back{font-size:16px;line-height:1.55;text-align:left}
+.vlist{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.vlist li{border-bottom:1px solid var(--line);padding-bottom:10px}
+.vlist .en{font-weight:700}
+.vlist .vi{color:var(--gn);font-weight:600}
+.we-step{border-left:3px solid var(--line);padding-left:12px;display:grid;gap:8px}
+.we-step.done{border-color:var(--good)}
+.we-step.now{border-color:var(--hema)}
+.numin{min-height:44px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);padding:0 12px;font:inherit;width:160px}
+/* mock */
+.mockbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.timer{font-family:var(--mono);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.grid40{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.grid40 button{min-height:36px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-family:var(--mono);font-size:12px;padding:0}
+.grid40 .a{background:var(--hema-soft);border-color:var(--hema)}
+.grid40 .f{box-shadow:inset 0 -3px 0 var(--warn)}
+.grid40 .cur{outline:2px solid var(--ink)}
+.grid40 .r{background:var(--good-soft);border-color:var(--good)}
+.grid40 .w{background:var(--bad-soft);border-color:var(--bad)}
+.score{font-family:var(--display);font-weight:800;font-size:72px;line-height:1;font-variant-numeric:tabular-nums}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:96px 1fr 48px;gap:10px;align-items:center;font-size:13px}
+.bar .t{height:10px;background:var(--sunk);border-radius:6px;overflow:hidden}
+.bar .t b{display:block;height:100%}
+/* progress page */
+.heat{display:grid;gap:14px}
+.fam{display:grid;gap:6px}
+.cells{display:flex;flex-wrap:wrap;gap:5px}
+.cell{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);font-family:var(--mono);font-size:10px;display:grid;place-items:center;color:var(--ink2);background:var(--surface)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--ink2);align-items:center}
+.legend span{display:inline-flex;gap:5px;align-items:center}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+/* modal */
+.modal{position:fixed;inset:0;z-index:20;background:color-mix(in srgb,var(--ink) 45%,transparent);display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.sheet{background:var(--surface);border-radius:18px;padding:20px;max-width:640px;width:100%;max-height:85vh;overflow:auto;display:grid;gap:14px}
+.field{display:grid;gap:6px}
+.field input,.field select,textarea{min-height:44px;border-radius:10px;border:1.5px solid var(--line);background:var(--ground);color:var(--ink);padding:8px 12px;font:inherit}
+textarea{width:100%;min-height:120px;font-family:var(--mono);font-size:12px}
+.sheetf{display:grid;gap:8px;font-size:15px}
+.sheetf h3{font-size:17px;margin-top:6px}
+.sheetf ul{margin:0;padding-left:20px}
+.sync{font-size:12px;color:var(--ink3)}
+/* lessons */
+.lesson{display:grid;gap:12px;font-size:16px;line-height:1.65}
+.lesson h3{font-size:19px;margin-top:4px}
+.lesson p{margin:0}
+.lesson ul,.lesson ol{margin:0;padding-left:22px;display:grid;gap:4px}
+.lesson ul ul,.lesson ol ul{margin-top:4px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;max-width:100%}
+.tbl table{border-collapse:collapse;font-size:14px;line-height:1.45;width:max-content;min-width:100%}
+.tbl th,.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tbl th,.tbl td{max-width:280px}
+.tbl td{min-width:72px}
+.tbl th{background:var(--sunk);font-weight:600}
+.tbl tr:last-child td{border-bottom:0}
+.callout{background:var(--hema-soft);border-left:4px solid var(--hema);border-radius:10px;padding:10px 14px}
+.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;border-radius:6px;padding:1px 6px;vertical-align:1px;background:var(--sunk);color:var(--ink2)}
+.badge.ext{background:var(--warn-soft);color:var(--warn)}
+.badge.fix{background:var(--bad-soft);color:var(--bad)}
+.extbox{background:var(--warn-soft);border-radius:14px;padding:14px 16px;display:grid;gap:10px}
+.extbox>summary{color:var(--warn)}
+.libunit{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;min-height:48px}
+.libunit .st{margin-left:auto;flex:none;font-size:11px;font-weight:600;border-radius:999px;padding:2px 8px;background:var(--sunk);color:var(--ink2)}
+.libunit .st.weak,.libunit .st.critical{background:var(--bad-soft);color:var(--bad)}
+.libunit .st.ok{background:var(--warn-soft);color:var(--warn)}
+.libunit .st.mastered{background:var(--good-soft);color:var(--good)}
+.trapl{margin:0;padding-left:20px;display:grid;gap:4px}
+@media (max-width:480px){
+  .sync{display:none}
+  .iconbtn{padding:0 10px}
+  .count .n{font-size:52px}
+  .go .big{font-size:24px}
+  .card{padding:18px 16px}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .stat .v{font-size:22px}
+  .bar{grid-template-columns:88px 1fr 42px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <button class="brand" id="brand" aria-label="Về trang chính"><i></i>Gram+</button>
+    <span class="sp"></span>
+    <span class="sync" id="sync"></span>
+    <button class="iconbtn" id="btnLib" aria-label="Thư viện bài học">Bài học</button>
+    <button class="iconbtn" id="btnProgress" aria-label="Tiến độ">Tiến độ</button>
+    <button class="iconbtn" id="btnSettings" aria-label="Cài đặt">⚙</button>
+  </header>
+  <main id="app"></main>
+</div>
+<div class="tip" id="tip" hidden></div>
+<div class="modal" id="modal" hidden><div class="sheet" id="sheet"></div></div>
+
+<script type="application/json" id="db">/*__DB__*/</script>
+<script>
+(function(){
+"use strict";
+const DB = JSON.parse(document.getElementById('db').textContent);
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const KEY = 'ch3003.coach.v1';
+
+/* ---------- indexes ---------- */
+const U = {}; DB.units.forEach(u => U[u.id] = u);
+const Q = {}; DB.questions.forEach(q => Q[q.id] = q);
+const F = {}; DB.flashcards.forEach(f => F[f.id] = f);
+const W = {}; DB.workedExamples.forEach(w => W[w.id] = w);
+const V = {}; DB.vocab.forEach((v, i) => { v._i = i; V[v.term.toLowerCase()] = v; });
+const byUnit = {}; // unit -> {q:[], f:[], v:[], we:[]}
+DB.units.forEach(u => byUnit[u.id] = {q:[], f:[], v:[], we:[]});
+DB.questions.forEach(q => byUnit[q.unit] && byUnit[q.unit].q.push(q.id));
+DB.flashcards.forEach(f => byUnit[f.unit] && byUnit[f.unit].f.push(f.id));
+DB.vocab.forEach(v => byUnit[v.unit] && byUnit[v.unit].v.push(v._i));
+DB.workedExamples.forEach(w => { const u = weUnit(w); if (byUnit[u]) byUnit[u].we.push(w.id); });
+function weUnit(w){ let u = String(w.unit||'').split('/')[0].trim(); if (!U[u]) { const m = u.match(/^[A-Z]{3}-\d+/); u = m ? m[0] : u; } return u; }
+const ORDER = DB.meta.order;
+const FAMILIES = DB.meta.families.map(f => f.id);
+const FAMNAME = {}, FAMSHORT = {}; DB.meta.families.forEach(f => { FAMNAME[f.id] = f.name; FAMSHORT[f.id] = f.short || f.name; });
+const BLUEPRINT = DB.meta.blueprint;
+const MOCK_N = FAMILIES.reduce((a,f) => a + (BLUEPRINT[f]||0), 0);
+const MOCK_MIN = DB.meta.mockMinutes || 70;
+const fam = uid => String(uid||'').slice(0,3);
+const scope = fam;
+const TONE = {HIS:'cb', BAC:'cb', FUN:'cb', PRO:'cb', VIR:'cb', IDT:'cb', CTL:'gn', GRO:'gn', APP:'gn'};
+const itemUnit = id => (Q[id]||F[id]||W[id]) ? (Q[id]||F[id]||{unit:weUnit(W[id]||{})}).unit : vocabById(id) ? vocabById(id).unit : null;
+function vocabById(id){ const m = /^VR?-(\d+)$/.exec(id); return m ? DB.vocab[+m[1]] : null; }
+
+/* ---------- dates ---------- */
+const DAY = 86400000;
+const toNum = s => { const [y,m,d] = s.split('-').map(Number); return Math.round(Date.UTC(y,m-1,d)/DAY); };
+const toStr = n => new Date(n*DAY).toISOString().slice(0,10);
+const DEV_SHIFT = (() => { try { return +localStorage.getItem('ch3003.dev.shift') || 0; } catch (e) { return 0; } })();
+const todayNum = () => { const d = new Date(); return Math.round(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())/DAY) + DEV_SHIFT; };
+const fmtDate = n => { const d = new Date(n*DAY); return d.getUTCDate() + '/' + (d.getUTCMonth()+1); };
+
+/* ---------- state ---------- */
+function freshState(){ return {v:1, updatedAt:0, settings:{examDate:DB.meta.defaultExamDate, dailyMin:150}, items:{}, units:{}, we:{}, sessions:{}, mocks:[], resume:null, traps:{}}; }
+let S = load();
+function load(){
+  try { const raw = localStorage.getItem(KEY); if (raw) { const s = JSON.parse(raw); if (s && s.v === 1) return Object.assign(freshState(), s); } } catch(e){}
+  return freshState();
+}
+let dbRef = null, dbTimer = null, dbBusy = false, dbDirty = false;
+function save(){
+  S.updatedAt = Date.now();
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){}
+  if (dbRef) { dbDirty = true; clearTimeout(dbTimer); dbTimer = setTimeout(flushDb, 2500); }
+}
+async function flushDb(){
+  if (!dbRef || dbBusy || !dbDirty) return;
+  const body = JSON.stringify(S);
+  if (body.length > 240000) { setSync('Tiến độ quá lớn để đồng bộ, vẫn lưu trên máy'); return; }
+  dbBusy = true; dbDirty = false;
+  try { await dbRef.set({state: body, updatedAt: S.updatedAt}); setSync('Đã lưu ☁'); }
+  catch(e){ dbDirty = true; setSync('Lưu trên máy'); }
+  dbBusy = false;
+  if (dbDirty) { clearTimeout(dbTimer); dbTimer = setTimeout(flushDb, 3000); }
+}
+function setSync(t){ $('#sync').textContent = t; }
+(async function initDb(){
+  try {
+    if (!window.claude || !window.claude.use) return;
+    const db = await window.claude.use('db');
+    if (!db) return;
+    const ref = db.doc('progress/state');
+    const snap = await ref.get();
+    if (snap.exists) {
+      const d = snap.data();
+      if (d && d.state && (d.updatedAt||0) > (S.updatedAt||0)) {
+        try { const s = JSON.parse(d.state); if (s && s.v === 1) { S = Object.assign(freshState(), s); try{localStorage.setItem(KEY, JSON.stringify(S));}catch(e){} if (view === 'home') renderHome(); } } catch(e){}
+      }
+    }
+    dbRef = ref; setSync('Đồng bộ ☁');
+    if ((S.updatedAt||0) > ((snap.exists && snap.data().updatedAt) || 0)) { dbDirty = true; flushDb(); }
+  } catch(e){ setSync('Lưu trên máy'); }
+})();
+window.addEventListener('pagehide', () => { if (dbDirty) flushDb(); });
+
+/* ---------- Leitner ---------- */
+const INTERVAL = [0,1,3,7,14];
+function st(id){ return S.items[id]; } // [box,due,seen,correct,streak,last]
+function register(id, due){ if (!S.items[id]) S.items[id] = [0, due, 0, 0, 0, 0]; }
+function capDue(d){ const ex = toNum(S.settings.examDate) - 1; const t = todayNum(); return (ex > t) ? Math.min(d, ex) : d; }
+function grade(id, correct, guess){
+  const t = todayNum();
+  register(id, t);
+  const s = S.items[id];
+  s[2]++; s[5] = t;
+  if (correct && !guess){ s[0] = Math.min(4, Math.max(1, s[0]+1)); s[3]++; s[4]++; s[1] = capDue(t + INTERVAL[s[0]]); }
+  else if (correct && guess){ s[0] = Math.max(1, s[0]); s[3]++; s[1] = t + 1; }
+  else { s[0] = 1; s[4] = 0; s[1] = t + 1; }
+  const u = itemUnit(id);
+  if (u && U[u]) { const us = unitSt(u); us.ema = 0.7*us.ema + 0.3*(correct?1:0); }
+  if (id[0]==='V' && s[0] >= 2 && id.startsWith('V-')) register('VR-'+id.slice(2), t+1);
+}
+function unitSt(u){ return S.units[u] || (S.units[u] = {intro:0, ema:0.5, mockErr:0}); }
+function mastery(u){
+  const b = byUnit[u]; if (!b) return 0;
+  const ids = b.q.filter(id => Q[id].pool !== 'mock').concat(b.f);
+  if (!ids.length) return 0;
+  let sum = 0; ids.forEach(id => { const s = st(id); sum += s ? s[0]/4 : 0; });
+  const us = S.units[u];
+  return 0.5*(sum/ids.length) + 0.5*(us ? us.ema : 0);
+}
+function unitState(u){ const us = S.units[u]; if (!us || !us.intro) return 'new'; const m = mastery(u); const b = byUnit[u]; const ids = b.q.concat(b.f); const seen = ids.filter(id => st(id) && st(id)[2]>0).length / Math.max(1,ids.length); if (us.critical && m < 0.6) return 'critical'; if (m < 0.6) return 'weak'; if (m >= 0.85 && seen >= 0.8) return 'mastered'; return 'ok'; }
+const introduced = () => DB.units.filter(u => S.units[u.id] && S.units[u.id].intro).map(u => u.id);
+
+/* ---------- utils ---------- */
+function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function weightedPick(arr, wf, n, avoidSeq){
+  const pool = arr.map(x => ({x, w: Math.max(0.01, wf(x))}));
+  const out = [];
+  while (out.length < n && pool.length){
+    let tot = pool.reduce((a,b)=>a+b.w,0), r = Math.random()*tot, i = 0;
+    for (; i < pool.length; i++){ r -= pool[i].w; if (r <= 0) break; }
+    i = Math.min(i, pool.length-1);
+    out.push(pool[i].x); pool.splice(i,1);
+  }
+  return out;
+}
+function noSameUnitInRow(ids){
+  const out = []; const rest = ids.slice();
+  while (rest.length){
+    const last = out.length ? itemUnit(out[out.length-1]) : null;
+    const lastSc = last ? scope(last) : null;
+    let i = rest.findIndex(id => itemUnit(id) !== last && scope(itemUnit(id)||'') !== lastSc);
+    if (i < 0) i = rest.findIndex(id => itemUnit(id) !== last);
+    if (i < 0) i = 0;
+    out.push(rest.splice(i,1)[0]);
+  }
+  return out;
+}
+
+/* ---------- rich text + vocab tooltips ---------- */
+const TERMS = [];
+DB.vocab.forEach(v => { [v.term].concat(v.aliases||[]).forEach(t => { if (t && t.length > 1) TERMS.push([t, v._i]); }); });
+TERMS.sort((a,b) => b[0].length - a[0].length);
+const TERMMAP = {}; TERMS.forEach(([t,i]) => { const k = t.toLowerCase(); if (!(k in TERMMAP)) TERMMAP[k] = i; });
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const TERMRE = TERMS.length ? new RegExp('(^|[^\\p{L}\\p{N}])(' + TERMS.map(t => reEsc(esc(t[0]))).join('|') + ')(?![\\p{L}\\p{N}])', 'giu') : null;
+let tipsOn = true;
+function rich(text, terms, ctx){
+  let s = esc(text);
+  if (terms && tipsOn && TERMRE){
+    const c = ctx || {used:new Set(), count:0, max:3};
+    s = s.replace(TERMRE, (m, pre, t) => {
+      const k = t.toLowerCase().replace(/&amp;/g,'&');
+      const i = TERMMAP[k]; if (i == null || c.used.has(i) || c.count >= c.max) return m;
+      c.used.add(i); c.count++;
+      return pre + '<span class="term" tabindex="0" data-v="' + i + '">' + t + '</span>';
+    });
+  }
+  // italic first (may sit inside bold: **a *Genus* b**, ***Genus***), then bold
+  s = s.replace(/(?:(?<=^)|(?<=[^*\w])|(?<=\*\*))\*(?![\s*])([^*\n]+?)(?<![\s*])\*(?=\*\*|[^*\w]|$)/gm, '<i>$1</i>').replace(/\*\*([^*]+?)\*\*/g, '<b>$1</b>');
+  s = s.replace(/\[(fig|mở rộng|hiệu chỉnh)\]/g, (m, t) => '<span class="badge' + (t === 'mở rộng' ? ' ext' : t === 'hiệu chỉnh' ? ' fix' : '') + '" title="' + (t === 'fig' ? 'Kiến thức từ hình trong slide' : t === 'mở rộng' ? 'Kiến thức mở rộng ngoài slide' : 'Slide có lỗi, đã hiệu chỉnh') + '">' + (t === 'fig' ? 'hình' : t) + '</span>');
+  return s;
+}
+/* light markdown: paragraphs, - / 1. lists (2-space nesting), | tables |, > callouts */
+function md(text, terms){
+  const ctx = {used:new Set(), count:0, max:14};
+  const R = x => rich(x, terms, ctx);
+  const lines = String(text||'').split('\n');
+  let out = '', i = 0;
+  const isTbl = l => /^\s*\|.*\|\s*$/.test(l);
+  const isLi = l => /^(\s*)([-*]|\d+\.)\s+/.exec(l);
+  while (i < lines.length){
+    const l = lines[i];
+    if (!l.trim()) { i++; continue; }
+    if (isTbl(l)) {
+      const rows = []; while (i < lines.length && isTbl(lines[i])) rows.push(lines[i++]);
+      const cells = r => r.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
+      const body = rows.filter(r => !/^\s*\|[\s:|-]+\|\s*$/.test(r));
+      const head = cells(body[0]);
+      out += '<div class="tbl"><table><thead><tr>' + head.map(c => '<th>' + R(c) + '</th>').join('') + '</tr></thead><tbody>' + body.slice(1).map(r => '<tr>' + cells(r).map(c => '<td>' + R(c) + '</td>').join('') + '</tr>').join('') + '</tbody></table></div>';
+      continue;
+    }
+    if (/^\s*>\s?/.test(l)) {
+      const buf = []; while (i < lines.length && /^\s*>\s?/.test(lines[i])) buf.push(lines[i++].replace(/^\s*>\s?/, ''));
+      out += '<div class="callout">' + buf.map(R).join('<br>') + '</div>';
+      continue;
+    }
+    if (isLi(l)) {
+      // build nested list by indentation
+      const items = [];
+      while (i < lines.length && (isLi(lines[i]) || (lines[i].trim() && /^\s{2,}\S/.test(lines[i]) && items.length))) {
+        const m = isLi(lines[i]);
+        if (m) items.push({ind: m[1].length, ord: /\d/.test(m[2]), txt: lines[i].slice(m[0].length)});
+        else items[items.length-1].txt += ' ' + lines[i].trim();
+        i++;
+      }
+      const build = (from, ind) => {
+        let h = '', k = from; const ord = items[from].ord;
+        h += ord ? '<ol>' : '<ul>';
+        while (k < items.length && items[k].ind >= ind) {
+          if (items[k].ind > ind) { const [sub, nk] = build(k, items[k].ind); h = h.replace(/<\/li>$/, '') + sub + '</li>'; k = nk; continue; }
+          h += '<li>' + R(items[k].txt) + '</li>'; k++;
+        }
+        return [h + (ord ? '</ol>' : '</ul>'), k];
+      };
+      let k = 0; while (k < items.length) { const [h, nk] = build(k, items[k].ind); out += h; k = nk; }
+      continue;
+    }
+    const buf = []; while (i < lines.length && lines[i].trim() && !isTbl(lines[i]) && !isLi(lines[i]) && !/^\s*>/.test(lines[i])) buf.push(lines[i++]);
+    out += '<p>' + R(buf.join(' ')) + '</p>';
+  }
+  return out;
+}
+function richBlock(text, terms){
+  // lines that look like tables go into <pre>
+  const lines = String(text||'').split('\n');
+  const tableish = l => /\|/.test(l) || /\S {3,}\S/.test(l);
+  let out = '', buf = [];
+  const flush = () => { if (buf.length){ out += '<pre>' + esc(buf.join('\n')) + '</pre>'; buf = []; } };
+  lines.forEach((l, i) => {
+    if (tableish(l) && lines.filter(tableish).length >= 2) buf.push(l);
+    else { flush(); out += rich(l, terms) + (i < lines.length-1 ? '\n' : ''); }
+  });
+  flush();
+  return out;
+}
+const tip = $('#tip');
+function showTip(el){
+  const v = DB.vocab[+el.dataset.v]; if (!v) return;
+  tip.innerHTML = '<b>' + esc(v.term) + '</b><span class="vi">' + esc(v.vi) + '</span><span>' + esc(v.def) + '</span>' + (v.example ? '<span class="small" style="opacity:.8"><i>' + esc(v.example) + '</i></span>' : '') + '<button type="button" id="tipAdd">+ thẻ ôn</button>';
+  tip.hidden = false;
+  const r = el.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  let x = Math.min(Math.max(16, r.left), window.innerWidth - tw - 16);
+  let y = r.bottom + 8; if (y + th > window.innerHeight - 8) y = Math.max(8, r.top - th - 8);
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  $('#tipAdd').onclick = e => { e.stopPropagation(); const id = 'V-' + v._i; register(id, todayNum()); S.items[id][1] = todayNum(); save(); $('#tipAdd').textContent = 'Đã thêm ✓'; };
+}
+document.addEventListener('mouseover', e => { const t = e.target.closest && e.target.closest('.term'); if (t && matchMedia('(hover:hover)').matches) showTip(t); });
+document.addEventListener('mouseout', e => { const t = e.target.closest && e.target.closest('.term'); if (t && matchMedia('(hover:hover)').matches && !tip.contains(e.relatedTarget)) tip.hidden = true; });
+document.addEventListener('click', e => {
+  const t = e.target.closest && e.target.closest('.term');
+  if (t){ e.preventDefault(); e.stopPropagation(); showTip(t); return; }
+  if (!tip.contains(e.target)) tip.hidden = true;
+}, true);
+document.addEventListener('focusin', e => { if (e.target.classList && e.target.classList.contains('term')) showTip(e.target); });
+window.addEventListener('scroll', () => { tip.hidden = true; }, {passive:true});
+
+/* ---------- planner ---------- */
+function daysLeft(){ return toNum(S.settings.examDate) - todayNum(); }
+function remainingUnits(){
+  const ip = (S.inProgress||[]).filter(u => !(S.units[u] && S.units[u].intro));
+  return ip.concat(ORDER.filter(u => !(S.units[u] && S.units[u].intro) && !ip.includes(u)));
+}
+function planToday(){
+  const D = daysLeft();
+  const rem = remainingUnits();
+  const R = rem.length;
+  if (D <= 0) return {kind:'review', D, units:[]};
+  const M = Math.max(2, Math.min(7, Math.round(D/3)));
+  if (R > 0 && (D > M || D > 2)) {
+    const L = Math.max(1, D - M);
+    const n = Math.min(R, L === 1 ? R : Math.max(1, Math.round(R / L)));
+    const units = rem.slice(0, n);
+    let minutes = units.reduce((a,u) => a + (U[u].minutes||20), 0);
+    const express = new Set();
+    if (D <= 4) units.forEach(u => express.add(u));
+    else {
+      const order = [u => U[u].priority==='L', u => U[u].priority==='M' && (U[u].difficulty||2)===1, u => U[u].priority==='M' && (U[u].difficulty||2)===2];
+      for (const f of order){ for (const u of units){ if (minutes <= 100) break; if (f(u) && !express.has(u)){ express.add(u); minutes -= (U[u].minutes||20)*0.5; } } }
+    }
+    return {kind:'learn', D, units, express:[...express]};
+  }
+  // reserved phase
+  if (D === 1) return {kind:'final', D};
+  if (D === 2) return {kind:'light', D};
+  const pattern = {3:'mock',4:'drill',5:'mock',6:'marathon',7:'mock'};
+  let kind = pattern[D] || 'mock';
+  if (D > 7) kind = (D % 2) ? 'mock' : 'drill';
+  if (kind === 'mock' && S.mocks.some(m => m.day === todayNum())) kind = 'extra';
+  return {kind, D};
+}
+const KIND_VI = {learn:'Học bài mới + ôn', mock:'Thi thử 50 câu + sửa lỗi', marathon:'Marathon bài tính', drill:'Bẫy "NOT" & đọc dữ liệu', light:'Nhẹ: ôn + mini-mock', final:'Tờ công thức cuối', review:'Ôn tập', extra:'Luyện thêm'};
+
+/* ---------- queue builders ---------- */
+function dueItems(filter){
+  const t = todayNum();
+  return Object.keys(S.items).filter(id => { const s = S.items[id]; return s[1] <= t && (!filter || filter(id)); })
+    .sort((a,b) => (S.items[a][1] - S.items[b][1]) || (mastery(itemUnit(a)) - mastery(itemUnit(b))));
+}
+const isQF = id => id.startsWith('Q-') || id.startsWith('F-');
+const isVocab = id => /^VR?-/.test(id);
+function balanced(ids, n){
+  // round-robin across families so one topic never floods the review block
+  const g = {}; ids.forEach(id => { const f = fam(itemUnit(id)); (g[f] = g[f] || []).push(id); });
+  const keys = Object.keys(g); const out = [];
+  while (out.length < n && keys.some(k => g[k].length)) keys.forEach(k => { if (out.length < n && g[k].length) out.push(g[k].shift()); });
+  return out;
+}
+function scale(n){ return Math.max(1, Math.round(n * (S.settings.dailyMin||150) / 150)); }
+function stepFor(id){ return id.startsWith('Q-') ? {t:'q', id} : id.startsWith('F-') ? {t:'fc', id} : isVocab(id) ? {t:'vc', id} : {t:'we', id}; }
+function pickUnitQs(u, n, exclude){
+  const qs = byUnit[u].q.filter(id => Q[id].pool !== 'mock' && !(exclude && exclude.has(id)));
+  const unseen = qs.filter(id => !st(id) || !st(id)[2]);
+  const src = unseen.length >= n ? unseen : qs;
+  const byType = {}; shuffle(src).forEach(id => (byType[Q[id].type] = byType[Q[id].type] || []).push(id));
+  const out = []; const types = Object.keys(byType);
+  while (out.length < n && types.some(t => byType[t].length)) types.forEach(t => { if (out.length < n && byType[t].length) out.push(byType[t].shift()); });
+  return out.sort((a,b) => (Q[a].difficulty||2) - (Q[b].difficulty||2));
+}
+function unitSteps(u, express){
+  const unit = U[u]; const steps = [];
+  const blk = 'Bài mới: ' + FAMNAME[fam(u)];
+  steps.push({t:'hook', unit:u, blk});
+  (unit.lesson||[]).forEach((c,i) => steps.push({t:'lesson', unit:u, i, blk}));
+  if (!express && (unit.extension||[]).length) steps.push({t:'ext', unit:u, blk});
+  (unit.keyCards||[]).forEach((c,i) => steps.push({t:'card', unit:u, i, blk}));
+  pickUnitQs(u, express ? 3 : 5).forEach(id => steps.push({t:'q', id, blk}));
+  steps.push({t:'unitDone', unit:u, blk});
+  return steps;
+}
+function mixedIds(n, exclude, filter){
+  const intro = introduced();
+  const cand = [];
+  intro.forEach(u => byUnit[u].q.forEach(id => { if (Q[id].pool !== 'mock' && !exclude.has(id) && (!filter || filter(id))) cand.push(id); }));
+  const t = todayNum();
+  const w = id => { const u = Q[id].unit; const m = mastery(u); const s = st(id); const wk = ['weak','critical'].includes(unitState(u)) ? 2 : 1; const fresh = !s || !s[2] ? 1.2 : (s[1] <= t ? 1.1 : 0.6); return (1.05 - m) * wk * fresh; };
+  let picked = weightedPick(cand, w, n);
+  return noSameUnitInRow(picked);
+}
+function buildQueue(plan){
+  const t = todayNum(); const steps = []; const used = new Set();
+  const add = (s, blk) => { s.blk = s.blk || blk; steps.push(s); if (s.id) used.add(s.id); };
+  const reviewBlock = (cap) => { balanced(dueItems(id => isQF(id)), cap).forEach(id => add(stepFor(id), 'Ôn cách quãng')); };
+  const weDue = () => Object.keys(S.we).filter(id => S.we[id].due <= t);
+  if (plan.kind === 'learn'){
+    reviewBlock(scale(35));
+    S.inProgress = plan.units.slice();
+    plan.units.forEach((u, k) => { unitSteps(u, plan.express.includes(u)).forEach(s => add(s)); if (k < plan.units.length - 1) add({t:'break'}, 'Nghỉ'); });
+    add({t:'break'}, 'Nghỉ');
+    // drill
+    const todays = plan.units.slice();
+    const newWE = []; todays.forEach(u => byUnit[u].we.forEach(w => newWE.push(w)));
+    newWE.forEach(w => add({t:'we', id:w, level:0}, 'Luyện bài tính'));
+    shuffle(weDue().filter(w => !newWE.includes(w))).slice(0, 2).forEach(w => add({t:'we', id:w}, 'Luyện bài tính'));
+    const calc = mixedIds(scale(4), used, id => Q[id].type === 'calc');
+    calc.forEach(id => add({t:'q', id}, 'Luyện bài tính'));
+    // mixed (introduced + today's units count as introduced at unitDone; pre-include today's)
+    todays.forEach(u => { unitSt(u); });
+    const tmpIntro = todays.filter(u => !S.units[u].intro); tmpIntro.forEach(u => S.units[u].intro = -1);
+    mixedIds(scale(plan.D <= 14 && (21 - plan.D) % 7 === 6 ? 18 : 9), used).forEach(id => add({t:'q', id}, 'Trộn bài'));
+    tmpIntro.forEach(u => S.units[u].intro = 0);
+    // vocab
+    todays.forEach(u => { if (byUnit[u].v.length) add({t:'vlist', unit:u}, 'Từ vựng'); });
+    dueItems(isVocab).slice(0, scale(40)).forEach(id => add({t:'vc', id}, 'Từ vựng'));
+  } else if (plan.kind === 'mock'){
+    add({t:'mock', k: nextMockK()}, 'Thi thử');
+  } else if (plan.kind === 'marathon'){
+    Object.keys(S.we).forEach(w => add({t:'we', id:w, level:3}, 'Marathon bài tính'));
+    reviewBlock(scale(25));
+    mixedIds(scale(15), used, id => Q[id].type !== 'calc').forEach(id => add({t:'q', id}, 'Giữ kiến thức'));
+  } else if (plan.kind === 'drill'){
+    mixedIds(scale(40), used, id => Q[id].type === 'not' || Q[id].type === 'data').forEach(id => add({t:'q', id}, 'NOT & dữ liệu'));
+    Object.keys(S.items).filter(id => isVocab(id) && S.items[id][0] <= 2).slice(0, scale(60)).forEach(id => add({t:'vc', id}, 'Quét từ vựng'));
+  } else if (plan.kind === 'light'){
+    reviewBlock(scale(25));
+    add({t:'mini', n:20}, 'Mini-mock');
+    add({t:'traps'}, 'Danh sách bẫy');
+  } else if (plan.kind === 'final'){
+    add({t:'sheet'}, 'Tờ công thức');
+    Object.keys(S.items).filter(id => isQF(id) && S.items[id][0] <= 1).slice(0, 15).forEach(id => add(stepFor(id), 'Thẻ yếu nhất'));
+  } else { // review / extra
+    reviewBlock(scale(30));
+    mixedIds(scale(15), used).forEach(id => add({t:'q', id}, 'Luyện điểm yếu'));
+    dueItems(isVocab).slice(0, 30).forEach(id => add({t:'vc', id}, 'Từ vựng'));
+  }
+  if (!steps.length) mixedIds(10, used).forEach(id => add({t:'q', id}, 'Luyện thêm'));
+  add({t:'done'}, 'Xong');
+  return steps;
+}
+function extraQueue(){
+  const used = new Set(); const steps = [];
+  balanced(dueItems(isQF), 15).forEach(id => { steps.push(Object.assign(stepFor(id), {blk:'Ôn thêm'})); used.add(id); });
+  mixedIds(15, used).forEach(id => steps.push({t:'q', id, blk:'Điểm yếu'}));
+  if (!steps.length && !introduced().length) return null;
+  steps.push({t:'done', blk:'Xong'});
+  return steps;
+}
+function nextMockK(){ return S.mocks.filter(m => !m.mini).length + 1; }
+function mockItems(k){
+  const out = [];
+  FAMILIES.forEach(f => {
+    let pool = DB.questions.filter(q => fam(q.unit) === f && q.pool === 'mock' && q.mockSet === k).map(q => q.id);
+    // keep every calc item of the set so each mock has its calculation questions
+    const calc = shuffle(pool.filter(id => Q[id].type === 'calc'));
+    if (pool.length >= BLUEPRINT[f]) { calc.slice(0, BLUEPRINT[f]).forEach(id => out.push(id)); shuffle(pool.filter(id => !calc.includes(id))).slice(0, BLUEPRINT[f] - Math.min(calc.length, BLUEPRINT[f])).forEach(id => out.push(id)); return; }
+    if (pool.length < BLUEPRINT[f]) {
+      const extra = DB.questions.filter(q => fam(q.unit) === f && q.pool !== 'mock' && !pool.includes(q.id))
+        .sort((a,b) => ((st(a.id)||[0,0,0,0,0,0])[5] - (st(b.id)||[0,0,0,0,0,0])[5]) || (((st(a.id)||[])[2]||0) - ((st(b.id)||[])[2]||0))).map(q => q.id);
+      pool = pool.concat(shuffle(extra.slice(0, BLUEPRINT[f]*3)));
+    }
+    shuffle(pool).slice(0, BLUEPRINT[f]).forEach(id => out.push(id));
+  });
+  return shuffle(out);
+}
+function miniItems(n){
+  const intro = introduced(); const out = [];
+  const cand = DB.questions.filter(q => q.pool !== 'mock' && intro.includes(q.unit));
+  return noSameUnitInRow(weightedPick(cand.map(q=>q.id), id => { const s = st(id); return (1.05 - mastery(Q[id].unit)) * (!s || !s[2] ? 1.5 : 1); }, n));
+}
+
+/* ---------- session engine ---------- */
+let view = 'home';
+function startSession(extra){
+  const t = todayNum();
+  if (!extra && S.parked) { if (S.parked.day === t) S.resume = S.parked; S.parked = null; }
+  if (!extra && S.resume && S.resume.day === t && !S.resume.extra && S.resume.pos < S.resume.steps.length) { view = 'session'; return renderStep(); }
+  let steps, plan;
+  if (extra === 'mock') { steps = [{t:'mock', k: nextMockK(), blk:'Thi thử'}, {t:'done', blk:'Xong'}]; plan = {kind:'mock'}; }
+  else if (extra) { steps = extraQueue(); plan = {kind:'extra'}; if (!steps) return; }
+  else {
+    plan = planToday();
+    if (S.sessions[t] && S.sessions[t].done && !extra) { steps = extraQueue(); plan = {kind:'extra'}; if (!steps) return; }
+    else steps = buildQueue(plan);
+  }
+  S.resume = {day:t, steps, pos:0, kind:plan.kind, extra:!!extra || plan.kind==='extra', answered:0, correct:0, t0:Date.now()};
+  if (!S.sessions[t]) S.sessions[t] = {done:false, answered:0, correct:0, kind:plan.kind};
+  save(); view = 'session'; renderStep();
+}
+function cur(){ return S.resume && S.resume.steps[S.resume.pos]; }
+function next(){ S.resume.pos++; save(); renderStep(); window.scrollTo({top:0}); }
+function requeue(step){
+  const r = S.resume; if (step.again) return;
+  const at = Math.min(r.steps.length - 1, r.pos + 3 + Math.floor(Math.random()*4));
+  r.steps.splice(at, 0, Object.assign({}, step, {again:true}));
+}
+function sessHead(){
+  const r = S.resume; const s = cur();
+  const total = r.steps.length; const pct = Math.round(100 * r.pos / Math.max(1,total-1));
+  const blocks = []; r.steps.forEach(x => { if (!blocks.includes(x.blk)) blocks.push(x.blk); });
+  const bi = blocks.indexOf(s.blk) + 1;
+  const mins = Math.round((Date.now() - (r.t0||Date.now()))/60000);
+  return '<div class="sesshead"><div class="row"><span class="chip">' + esc(s.blk||'') + ' · phần ' + bi + '/' + blocks.length + '</span><span class="small muted mono">' + r.pos + '/' + (total-1) + ' · ' + mins + ' phút</span></div><div class="progress"><b style="width:' + pct + '%"></b></div></div>';
+}
+function unitTag(u){ return '<span class="tag ' + (TONE[fam(u)]||'x') + '">' + esc(u) + '</span>'; }
+
+function renderStep(){
+  tip.hidden = true; tipsOn = true;
+  const s = cur(); if (!s) { view = 'home'; return renderHome(); }
+  const R = {hook:rHook, lesson:rLesson, ext:rExt, card:rCard, q:rQ, fc:rFc, vc:rVc, unitDone:rUnitDone, break:rBreak, we:rWe, vlist:rVlist, mock:rMock, mini:rMock, traps:rTraps, sheet:rSheet, done:rDone, repairIntro:rRepairIntro};
+  (R[s.t] || (() => next()))(s);
+}
+
+/* hook + predict */
+function rHook(s){
+  const u = U[s.unit]; const pq = u.predictQuestion;
+  let h = sessHead() + '<article class="card hook"><div class="row" style="display:flex;gap:8px;align-items:center">' + unitTag(s.unit) + '<span class="label">Tình huống mở đầu</span></div><h2>' + esc(u.title) + '</h2><div class="q">' + rich(u.hookVi, true) + '</div>';
+  if (pq && pq.options) {
+    h += '<div class="label">Đoán trước (không tính điểm)</div><div class="stem">' + richBlock(pq.stem, true) + '</div><div class="opts" id="opts">' + pq.options.map((o,i) => '<button class="opt" data-i="' + i + '"><span class="k">' + 'ABCD'[i] + '</span><span>' + rich(o, true) + '</span></button>').join('') + '</div><div id="fb"></div>';
+  } else h += '<div class="actions"><button class="btn wide" id="nx">Vào bài →</button></div>';
+  app.innerHTML = h + '</article>';
+  if (pq && pq.options) {
+    app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      const i = +b.dataset.i;
+      app.querySelectorAll('.opt').forEach((x,j) => { x.disabled = true; if (j === pq.answer) x.classList.add('right'); else if (j === i) x.classList.add('pick'); });
+      $('#fb').innerHTML = '<div class="fb ' + (i===pq.answer?'ok':'no') + '"><div class="h">' + (i===pq.answer ? 'Đoán đúng!' : 'Chưa đúng — không sao, học xong bạn sẽ hiểu.') + '</div><div>' + rich(pq.explanation||'', true) + '</div></div><div class="actions" style="margin-top:12px"><button class="btn wide" id="nx">Vào bài →</button></div>';
+      $('#nx').onclick = next; $('#nx').focus();
+    });
+  } else $('#nx').onclick = next;
+}
+function rCard(s){
+  const u = U[s.unit]; const c = u.keyCards[s.i];
+  app.innerHTML = sessHead() + '<article class="card"><div style="display:flex;gap:8px;align-items:center">' + unitTag(s.unit) + '<span class="label">Ý chính ' + (s.i+1) + '/' + u.keyCards.length + '</span></div><h2>' + esc(c.title) + '</h2><div class="stem">' + richBlock(c.bodyEn, true) + '</div>' + (c.glossVi ? '<div class="gloss">' + rich(c.glossVi, true) + '</div>' : '') + '<div class="actions"><button class="btn wide" id="nx">Tiếp →</button></div></article>';
+  $('#nx').onclick = next;
+}
+function rLesson(s){
+  keyHandler = null;
+  const u = U[s.unit]; const sec = u.lesson[s.i];
+  app.innerHTML = sessHead() + '<article class="card"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' + unitTag(s.unit) + '<span class="label">Bài học · phần ' + (s.i+1) + '/' + u.lesson.length + '</span></div><h2>' + rich(sec.h, false) + '</h2><div class="lesson">' + md(sec.body, true) + '</div><div class="actions"><button class="btn wide" id="nx">' + (s.i < u.lesson.length-1 ? 'Phần tiếp →' : 'Xong phần lí thuyết →') + '</button></div></article>';
+  $('#nx').onclick = next;
+}
+function rExt(s){
+  keyHandler = null;
+  const u = U[s.unit];
+  app.innerHTML = sessHead() + '<article class="card"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' + unitTag(s.unit) + '<span class="label">Mở rộng & thực tế</span></div><h2>' + esc(u.title) + '</h2>' + u.extension.map(x => '<div class="extbox"><h3 style="font-size:17px">' + rich(x.h, false) + '</h3><div class="lesson">' + md(x.body, true) + '</div></div>').join('') + (u.traps && u.traps.length ? '<div class="note"><b>Bẫy hay gặp trong đề:</b><ul class="trapl">' + u.traps.map(t => '<li>' + esc(t) + ' ✗</li>').join('') + '</ul></div>' : '') + '<div class="actions"><button class="btn wide" id="nx">Sang ý chính →</button></div></article>';
+  $('#nx').onclick = next;
+}
+function rUnitDone(s){
+  const u = s.unit; const t = todayNum(); const us = unitSt(u);
+  if (!us.intro) {
+    us.intro = t;
+    byUnit[u].f.forEach(id => register(id, t+1));
+    byUnit[u].v.forEach(i => register('V-'+i, t+1));
+    byUnit[u].q.forEach(id => { if (Q[id].pool !== 'mock' && !st(id)) register(id, t + 2 + Math.floor(Math.random()*3)); });
+    byUnit[u].we.forEach(w => { if (!S.we[w]) S.we[w] = {level:0, due:t}; });
+    S.inProgress = (S.inProgress||[]).filter(x => x !== u);
+  }
+  save(); next();
+}
+function rBreak(){
+  app.innerHTML = sessHead() + '<article class="card" style="text-align:center"><h2>Nghỉ 3 phút</h2><p class="muted">Đứng dậy, uống nước, nhìn xa. Não cần khoảng nghỉ để chuyển thông tin vào trí nhớ dài hạn.</p><div class="actions"><button class="btn wide" id="nx">Tiếp tục →</button></div></article>';
+  $('#nx').onclick = next;
+}
+
+/* MCQ */
+function qFeedback(q, chosen, order){
+  const ok = chosen === q.answer;
+  let h = '<div class="fb ' + (ok?'ok':'no') + '"><div class="h">' + (ok ? 'Đúng' : 'Sai — đáp án: ' + 'ABCD'[order.indexOf(q.answer)]) + '</div><div>' + rich(q.explanation, true) + '</div>';
+  if (!ok && q.distractorNotes && q.distractorNotes[chosen]) h += '<div class="note"><b>Bạn chọn ' + 'ABCD'[order.indexOf(chosen)] + ':</b> ' + rich(q.distractorNotes[chosen], true) + '</div>';
+  if (q.trap) h += '<div class="small"><span class="chip">Bẫy: ' + esc(q.trap) + '</span></div>';
+  if (q.steps && q.steps.length) h += '<details' + (ok?'':' open') + '><summary>Các bước</summary><ol class="steps">' + q.steps.map(x => '<li>' + rich(x, true) + '</li>').join('') + '</ol></details>';
+  if (q.vocab && q.vocab.length) h += '<div class="chips">' + q.vocab.map(t => { const v = V[String(t).toLowerCase()]; return v ? '<button class="vchip term" data-v="' + v._i + '">' + esc(v.term) + '</button>' : ''; }).join('') + '</div>';
+  return h + '</div>';
+}
+function rQ(s){
+  const q = Q[s.id]; if (!q) return next();
+  const order = shuffle([0,1,2,3]);
+  const u = q.unit;
+  app.innerHTML = sessHead() + '<article class="card"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' + unitTag(u) + '<span class="label">' + esc(q.type) + ' · ' + '●'.repeat(q.difficulty||1) + (s.again ? ' · làm lại' : '') + '</span></div><div class="stem">' + richBlock(q.stem, true) + '</div><div class="opts">' + order.map((oi, k) => '<button class="opt" data-i="' + oi + '"><span class="k">' + 'ABCD'[k] + '</span><span>' + rich(q.options[oi], true) + '</span></button>').join('') + '</div><label class="guess"><input type="checkbox" id="guess"> Tôi đoán câu này</label><div id="fb"></div></article>';
+  const pick = oi => {
+    const guess = $('#guess').checked;
+    app.querySelectorAll('.opt').forEach(b => { b.disabled = true; const i = +b.dataset.i; if (i === q.answer) b.classList.add('right'); else if (i === oi) b.classList.add('wrong'); });
+    $('#guess').disabled = true;
+    const ok = oi === q.answer;
+    grade(q.id, ok, guess);
+    if (!ok) { requeue(s); if (q.trap) S.traps[q.trap] = (S.traps[q.trap]||0) + 1; }
+    const r = S.resume; r.answered++; if (ok) r.correct++;
+    const ss = S.sessions[r.day]; if (ss){ ss.answered++; if (ok) ss.correct++; }
+    save();
+    $('#fb').innerHTML = qFeedback(q, oi, order) + '<div class="actions" style="margin-top:12px"><button class="btn wide" id="nx">Tôi đã hiểu →</button>' + ((U[u].keyCards||[]).length ? '<button class="btn ghost" id="kc">Xem lại ý chính</button>' : '') + '</div>';
+    $('#nx').onclick = next; $('#nx').focus({preventScroll:true});
+    const kc = $('#kc'); if (kc) kc.onclick = () => openCards(u);
+    $('#fb').scrollIntoView({behavior:'smooth', block:'nearest'});
+  };
+  app.querySelectorAll('.opt').forEach(b => b.onclick = () => pick(+b.dataset.i));
+  keyHandler = e => { if (e.target.tagName === 'INPUT' && e.target.type !== 'checkbox') return; const k = '1234'.indexOf(e.key); const ka = 'abcd'.indexOf(e.key.toLowerCase()); const idx = k >= 0 ? k : ka; if (idx >= 0 && !app.querySelector('.opt[disabled]')) { pick(order[idx]); } };
+}
+let keyHandler = null;
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.activeElement && document.activeElement.id === 'nx') return;
+  if (e.key === 'Enter') { const nx = $('#nx'); if (nx && view === 'session') { e.preventDefault(); nx.click(); return; } }
+  if (keyHandler && view === 'session') keyHandler(e);
+});
+function openCards(u){
+  const unit = U[u];
+  modal('<h2>' + esc(unit.title) + '</h2>' + unit.keyCards.map(c => '<div><h3 style="font-size:17px">' + esc(c.title) + '</h3><div class="stem" style="font-size:15px">' + richBlock(c.bodyEn, true) + '</div>' + (c.glossVi ? '<div class="gloss">' + rich(c.glossVi, true) + '</div>' : '') + '</div>').join('') + '<button class="btn" id="mclose">Đóng</button>');
+  $('#mclose').onclick = closeModal;
+}
+
+/* flashcards */
+function flipCard(s, front, back, tagU, label){
+  keyHandler = null;
+  app.innerHTML = sessHead() + '<article class="card"><div style="display:flex;gap:8px;align-items:center">' + (tagU ? unitTag(tagU) : '') + '<span class="label">' + label + (s.again?' · làm lại':'') + '</span></div><button class="flip" id="flip"><span>' + front + '</span></button><div id="fb"></div></article>';
+  const reveal = () => {
+    $('#flip').outerHTML = '<div class="flip" style="border-style:solid"><div class="back">' + back + '</div></div>';
+    $('#fb').innerHTML = '<div class="actions"><button class="btn bad wide" id="no">Chưa nhớ</button><button class="btn good wide" id="nx">Nhớ rồi</button></div>';
+    const done = ok => { grade(s.id, ok, false); if (!ok) requeue(s); save(); next(); };
+    $('#no').onclick = () => done(false); $('#nx').onclick = () => done(true);
+  };
+  $('#flip').onclick = reveal;
+  keyHandler = e => { if (e.key === ' ' && $('#flip')) { e.preventDefault(); reveal(); } else if (e.key === '1' && $('#no')) $('#no').click(); else if (e.key === '2' && $('#nx')) $('#nx').click(); };
+}
+function rFc(s){
+  const f = F[s.id]; if (!f) return next();
+  const lab = {fact:'Thẻ kiến thức', number:'Thẻ con số', trap:'Thẻ bẫy'}[f.kind] || 'Thẻ';
+  flipCard(s, rich(f.front, true) + '<div class="small muted" style="margin-top:12px">Nhớ lại trong đầu, rồi chạm để lật</div>', rich(f.back, true), f.unit, lab);
+}
+function rVc(s){
+  const v = vocabById(s.id); if (!v) return next();
+  if (s.id.startsWith('VR-')) {
+    const def = esc(v.def).replace(new RegExp(reEsc(esc(v.term)), 'gi'), '_____');
+    flipCard(s, '<div class="vlist"><span class="vi">' + esc(v.vi) + '</span><div class="small" style="margin-top:8px">' + def + '</div></div><div class="small muted" style="margin-top:12px">Thuật ngữ tiếng Anh là gì?</div>', '<div style="font-size:22px;font-weight:700">' + esc(v.term) + '</div>', v.unit, 'Từ vựng: Việt → Anh');
+  } else {
+    flipCard(s, '<b style="font-size:24px">' + esc(v.term) + '</b><div class="small muted" style="margin-top:12px">Nghĩa là gì? Chạm để lật</div>', '<div class="vlist"><div class="vi" style="font-size:18px">' + esc(v.vi) + '</div><div>' + esc(v.def) + '</div>' + (v.example ? '<div class="small muted"><i>' + esc(v.example) + '</i></div>' : '') + '</div>', v.unit, 'Từ vựng: Anh → Việt');
+  }
+}
+function rVlist(s){
+  keyHandler = null;
+  const u = U[s.unit];
+  app.innerHTML = sessHead() + '<article class="card"><div style="display:flex;gap:8px;align-items:center">' + unitTag(s.unit) + '<span class="label">Từ vựng mới · ' + byUnit[s.unit].v.length + ' từ</span></div><h2>' + esc(u.title) + '</h2><p class="small muted">Đọc lướt một lượt. Ngày mai các từ này sẽ quay lại dưới dạng thẻ lật.</p><ul class="vlist">' + byUnit[s.unit].v.map(i => { const v = DB.vocab[i]; return '<li><div><span class="en">' + esc(v.term) + '</span> — <span class="vi">' + esc(v.vi) + '</span></div><div class="small">' + esc(v.def) + '</div>' + (v.example ? '<div class="small muted"><i>' + esc(v.example) + '</i></div>' : '') + '</li>'; }).join('') + '</ul><div class="actions"><button class="btn wide" id="nx">Đã đọc →</button></div></article>';
+  $('#nx').onclick = next;
+}
+
+/* worked examples */
+function weFill(w, level){
+  const fl = w.fadeLevels || {};
+  const v = fl[String(level)];
+  if (v === 'all') return w.steps.map((_, i) => i);
+  if (Array.isArray(v)) return v;
+  if (level >= 3) return w.steps.map((_, i) => i);
+  return [];
+}
+function stepAns(st){ return st.input === 'choice' && st.choices && typeof st.answer === 'number' && st.choices[st.answer] != null ? String(st.choices[st.answer]) : String(st.answer); }
+function checkStep(step, val){
+  if (step.input === 'choice') return String(val) === String(step.answer) || (step.choices && step.choices[+val] === step.answer);
+  if (step.input === 'number'){
+    const parse = x => { x = String(x).trim().replace(',', '.'); if (/^-?\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/.test(x)) { const [a,b] = x.split('/'); return parseFloat(a)/parseFloat(b); } return parseFloat(x.replace('%','')); };
+    const a = parse(val), b = parse(step.answer); if (isNaN(a) || isNaN(b)) return false;
+    const tol = Math.max(0.005, Math.abs(b)*0.01);
+    return Math.abs(a-b) <= tol || (String(step.answer).includes('%') && Math.abs(a/100 - b/100) <= 0.005);
+  }
+  return null;
+}
+function rWe(s){
+  keyHandler = null;
+  const w = W[s.id]; if (!w) return next();
+  if (!S.we[w.id]) S.we[w.id] = {level:0, due:todayNum()};
+  const level = s.level != null ? s.level : S.we[w.id].level;
+  const fill = weFill(w, level);
+  let k = 0, errors = 0;
+  const lvName = ['Giải mẫu (xem từng bước)', 'Tự làm bước cuối', 'Tự làm nhiều bước', 'Tự giải toàn bộ'][Math.min(3, level)];
+  const draw = () => {
+    let h = sessHead() + '<article class="card"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' + unitTag(weUnit(w)) + '<span class="label">Bài giải mẫu · mức ' + level + ': ' + lvName + '</span></div><h2>' + esc(w.title) + '</h2><div class="stem">' + richBlock(w.problem, true) + '</div>';
+    w.steps.forEach((st_, i) => {
+      if (i > k) return;
+      const need = fill.includes(i);
+      const cls = i < k ? 'done' : 'now';
+      h += '<div class="we-step ' + cls + '"><div><b>Bước ' + (i+1) + '.</b> ' + rich(st_.prompt, true) + '</div>';
+      if (i < k) h += '<div class="muted">' + rich(stepAns(st_), true) + '</div>';
+      else if (!need) h += '<div class="muted">' + rich(stepAns(st_), true) + '</div><div class="actions"><button class="btn" id="nstep">Bước tiếp</button></div>';
+      else {
+        if (st_.input === 'choice' && st_.choices && st_.choices.length) h += '<div class="opts">' + st_.choices.map((c, j) => '<button class="opt" data-j="' + j + '"><span class="k">' + 'ABCD'[j] + '</span><span>' + rich(c, true) + '</span></button>').join('') + '</div>';
+        else if (st_.input === 'number') h += '<div class="actions"><input class="numin" id="num" inputmode="decimal" placeholder="Nhập số, vd 0.25 hoặc 1/4"><button class="btn" id="chk">Kiểm tra</button></div>';
+        else h += '<div class="small muted">Tự làm ra giấy, rồi xem đáp án.</div><div class="actions"><button class="btn" id="show">Xem đáp án</button></div>';
+        if (st_.hint) h += '<details><summary class="small">Gợi ý</summary><div class="small">' + rich(st_.hint, true) + '</div></details>';
+        h += '<div id="sfb"></div>';
+      }
+      h += '</div>';
+    });
+    if (k >= w.steps.length) h += '<div class="fb ok"><div class="h">Đáp số</div><div>' + rich(w.finalAnswer, true) + '</div>' + (w.explanationVi ? '<div class="small">' + rich(w.explanationVi, true) + '</div>' : '') + '</div><div class="actions"><button class="btn wide" id="nx">Xong bài này →</button></div>';
+    app.innerHTML = h + '</article>';
+    const adv = () => { k++; draw(); const el = app.querySelector('.we-step.now') || $('#nx'); if (el) el.scrollIntoView({behavior:'smooth', block:'center'}); };
+    const stp = w.steps[k];
+    const res = ok => {
+      const sfb = $('#sfb');
+      if (ok) { sfb.innerHTML = '<div class="fb ok"><div class="h">Đúng: ' + rich(stepAns(stp), true) + '</div></div><div class="actions"><button class="btn" id="nstep">Bước tiếp</button></div>'; }
+      else { errors++; sfb.innerHTML = '<div class="fb no"><div class="h">Chưa đúng. Đáp án: ' + rich(stepAns(stp), true) + '</div></div><div class="actions"><button class="btn" id="nstep">Bước tiếp</button></div>'; }
+      $('#nstep').onclick = adv;
+    };
+    if ($('#nstep')) $('#nstep').onclick = adv;
+    app.querySelectorAll('.we-step.now .opt').forEach(b => b.onclick = () => { const j = +b.dataset.j; app.querySelectorAll('.we-step.now .opt').forEach(x => x.disabled = true); const ok = checkStep(stp, j) || (stp.choices && String(stp.choices[j]) === String(stp.answer)); b.classList.add(ok ? 'right' : 'wrong'); res(ok); });
+    if ($('#chk')) $('#chk').onclick = () => { const v = $('#num').value; if (!v.trim()) return; $('#chk').disabled = true; res(checkStep(stp, v)); };
+    if ($('#num')) $('#num').onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); $('#chk').click(); } };
+    if ($('#show')) $('#show').onclick = () => { const sfb = $('#sfb'); sfb.innerHTML = '<div class="fb ok"><div class="h">Đáp án: ' + rich(stepAns(stp), true) + '</div></div><div class="actions"><button class="btn bad" id="sno">Tôi làm sai</button><button class="btn good" id="sok">Tôi làm đúng</button></div>'; $('#show').remove(); $('#sno').onclick = () => { errors++; adv(); }; $('#sok').onclick = adv; };
+    if ($('#nx')) $('#nx').onclick = () => {
+      const ws = S.we[w.id]; const t = todayNum();
+      if (fill.length) { if (errors === 0) { ws.level = Math.min(3, Math.max(ws.level, level) + 1); ws.due = capDue(t + [1,3,5,7][Math.min(3, ws.level)]); } else { ws.level = Math.max(0, level - 1); ws.due = t + 1; } }
+      else { ws.level = Math.max(ws.level, 1); ws.due = t + 2; }
+      save(); next();
+    };
+  };
+  draw();
+}
+
+/* mock / mini-mock */
+function rMock(s){
+  keyHandler = null;
+  const r = S.resume;
+  if (!s.items) { s.items = s.t === 'mini' ? miniItems(s.n || 20) : mockItems(s.k); s.ans = {}; s.flag = {}; s.cur = 0; s.secs = s.t === 'mini' ? Math.round(s.items.length * 84) : Math.round(MOCK_MIN * 60 * s.items.length / MOCK_N); s.orders = {}; s.items.forEach(id => s.orders[id] = shuffle([0,1,2,3])); save(); }
+  if (s.result) return mockResult(s);
+  if (!s.startedAt) {
+    app.innerHTML = sessHead() + '<article class="card"><span class="label">' + (s.t === 'mini' ? 'Mini-mock' : 'Thi thử lần ' + s.k) + '</span><h2>' + s.items.length + ' câu · ' + Math.round(s.secs/60) + ' phút</h2><p class="muted">Giống đề thật: không có gợi ý từ vựng, không biết đúng sai tới khi nộp. Có thể đánh dấu câu để quay lại. Chuẩn bị giấy nháp và máy tính cầm tay. Đề thật: 70 phút, trắc nghiệm, chiếm 65% điểm.</p><div class="actions"><button class="btn wide" id="go">Bắt đầu tính giờ</button></div></article>';
+    $('#go').onclick = () => { s.startedAt = Date.now(); save(); rMock(s); };
+    return;
+  }
+  tipsOn = false;
+  const draw = () => {
+    tipsOn = false;
+    const id = s.items[s.cur], q = Q[id], ord = s.orders[id];
+    const left = Math.max(0, s.secs - Math.floor((Date.now() - s.startedAt)/1000));
+    app.innerHTML = '<div class="sesshead"><div class="mockbar"><span class="timer" id="timer">' + mmss(left) + '</span><span class="small muted">Câu ' + (s.cur+1) + '/' + s.items.length + ' · đã làm ' + Object.keys(s.ans).length + '</span><button class="btn ghost" id="submit">Nộp bài</button></div></div><article class="card"><div class="stem">' + richBlock(q.stem, false) + '</div><div class="opts">' + ord.map((oi,k) => '<button class="opt' + (s.ans[id] === oi ? ' pick' : '') + '" data-i="' + oi + '"><span class="k">' + 'ABCD'[k] + '</span><span>' + rich(q.options[oi], false) + '</span></button>').join('') + '</div><div class="actions"><button class="btn ghost" id="prev">← Trước</button><button class="btn ghost" id="flag">' + (s.flag[id] ? 'Bỏ đánh dấu' : 'Đánh dấu') + '</button><button class="btn wide" id="nxq">Sau →</button></div><div class="grid40">' + s.items.map((x,i) => '<button data-g="' + i + '" class="' + (s.ans[x] != null ? 'a ' : '') + (s.flag[x] ? 'f ' : '') + (i === s.cur ? 'cur' : '') + '">' + (i+1) + '</button>').join('') + '</div></article><div id="confirm"></div>';
+    app.querySelectorAll('.opt').forEach(b => b.onclick = () => { s.ans[id] = +b.dataset.i; save(); if (s.cur < s.items.length-1) { s.cur++; } draw(); });
+    $('#prev').onclick = () => { if (s.cur > 0) { s.cur--; draw(); } };
+    $('#nxq').onclick = () => { if (s.cur < s.items.length-1) { s.cur++; draw(); } };
+    $('#flag').onclick = () => { s.flag[id] = !s.flag[id]; save(); draw(); };
+    app.querySelectorAll('[data-g]').forEach(b => b.onclick = () => { s.cur = +b.dataset.g; draw(); });
+    $('#submit').onclick = () => {
+      const un = s.items.length - Object.keys(s.ans).length;
+      $('#confirm').innerHTML = '<div class="card" style="margin-top:12px"><div>' + (un ? 'Còn <b>' + un + '</b> câu chưa làm. ' : '') + 'Nộp bài bây giờ?</div><div class="actions"><button class="btn ghost" id="cno">Làm tiếp</button><button class="btn" id="cyes">Nộp</button></div></div>';
+      $('#cno').onclick = () => { $('#confirm').innerHTML = ''; };
+      $('#cyes').onclick = () => submitMock(s);
+      $('#confirm').scrollIntoView({behavior:'smooth'});
+    };
+    keyHandler = e => { const k = '1234'.indexOf(e.key); if (k >= 0) app.querySelectorAll('.opt')[k].click(); else if (e.key === 'ArrowRight') $('#nxq').click(); else if (e.key === 'ArrowLeft') $('#prev').click(); };
+  };
+  clearInterval(window._mt);
+  window._mt = setInterval(() => { const el = $('#timer'); if (!el || cur() !== s) { clearInterval(window._mt); return; } const left = Math.max(0, s.secs - Math.floor((Date.now() - s.startedAt)/1000)); el.textContent = mmss(left); if (left <= 0) { clearInterval(window._mt); submitMock(s); } }, 1000);
+  draw();
+}
+const mmss = x => String(Math.floor(x/60)).padStart(2,'0') + ':' + String(x%60).padStart(2,'0');
+function submitMock(s){
+  clearInterval(window._mt);
+  let right = 0; const byFam = {}; const errUnits = {};
+  s.items.forEach(id => {
+    const q = Q[id]; const f = fam(q.unit); byFam[f] = byFam[f] || [0,0]; byFam[f][1]++;
+    const ok = s.ans[id] === q.answer;
+    if (ok) { right++; byFam[f][0]++; } else { errUnits[q.unit] = (errUnits[q.unit]||0) + 1; if (q.trap) S.traps[q.trap] = (S.traps[q.trap]||0)+1; }
+    grade(id, ok, false);
+  });
+  const score = Math.round(100 * right / s.items.length) / 10;
+  s.result = {right, n: s.items.length, score, byFam, errUnits, mins: Math.round((Date.now()-s.startedAt)/60000)};
+  S.mocks.push({day: todayNum(), k: s.k, mini: s.t === 'mini', score, byFam});
+  Object.keys(errUnits).forEach(u => { const us = unitSt(u); us.mockErr = (us.mockErr||0) + errUnits[u]; });
+  if (S.mocks.filter(m => !m.mini).length >= 2) introduced().forEach(u => { if (mastery(u) < 0.6) unitSt(u).critical = true; });
+  // repair steps
+  if (s.t === 'mock') {
+    const weak = Object.keys(errUnits).filter(u => errUnits[u] >= 2);
+    const rank = introduced().slice().sort((a,b) => ((errUnits[b]||0) - (errUnits[a]||0)) || (mastery(a) - mastery(b)));
+    const targets = [...new Set(weak.concat(rank))].slice(0, 3);
+    const rs = [{t:'repairIntro', units:targets, blk:'Sửa lỗi'}];
+    const used = new Set(s.items);
+    targets.forEach(u => {
+      (U[u].keyCards||[]).forEach((c,i) => rs.push({t:'card', unit:u, i, blk:'Sửa lỗi'}));
+      pickUnitQs(u, 8, used).forEach(id => { used.add(id); rs.push({t:'q', id, blk:'Sửa lỗi'}); });
+    });
+    S.resume.steps.splice(S.resume.pos + 1, 0, ...rs);
+  }
+  save(); tipsOn = true; mockResult(s);
+}
+function mockResult(s){
+  keyHandler = null; tipsOn = true;
+  const res = s.result;
+  let h = sessHead() + '<article class="card"><span class="label">' + (s.t === 'mini' ? 'Mini-mock' : 'Thi thử lần ' + s.k) + ' · ' + res.mins + ' phút</span><div style="display:flex;align-items:baseline;gap:12px"><span class="score" style="color:' + (res.score >= 9 ? 'var(--good)' : res.score >= 7 ? 'var(--warn)' : 'var(--bad)') + '">' + res.score.toFixed(1) + '</span><span class="muted">/ 10 · ' + res.right + '/' + res.n + ' câu đúng</span></div><div class="bars">' + FAMILIES.filter(f => res.byFam[f]).map(f => { const [a,b] = res.byFam[f]; const p = a/b; return '<div class="bar"><span>' + FAMSHORT[f] + '</span><span class="t"><b style="width:' + Math.round(p*100) + '%;background:' + (p >= .85 ? 'var(--good)' : p >= .6 ? 'var(--warn)' : 'var(--bad)') + '"></b></span><span class="mono">' + a + '/' + b + '</span></div>'; }).join('') + '</div><div class="grid40">' + s.items.map((id,i) => '<button data-g="' + i + '" class="' + (s.ans[id] === Q[id].answer ? 'r' : 'w') + '">' + (i+1) + '</button>').join('') + '</div><p class="small muted">Chạm số để xem lời giải từng câu. Câu sai đã vào hàng ôn ngày mai.</p><div id="rv"></div><div class="actions"><button class="btn wide" id="nx">' + (s.t === 'mock' ? 'Sang phần sửa lỗi →' : 'Tiếp →') + '</button></div></article>';
+  app.innerHTML = h;
+  app.querySelectorAll('[data-g]').forEach(b => b.onclick = () => {
+    const id = s.items[+b.dataset.g], q = Q[id], ord = s.orders[id];
+    const ch = s.ans[id];
+    $('#rv').innerHTML = '<div class="card" style="padding:16px"><div class="small muted">Câu ' + (+b.dataset.g+1) + ' · ' + unitTag(q.unit) + '</div><div class="stem">' + richBlock(q.stem, true) + '</div><div class="opts">' + ord.map((oi,k) => '<div class="opt ' + (oi === q.answer ? 'right' : oi === ch ? 'wrong' : '') + '"><span class="k">' + 'ABCD'[k] + '</span><span>' + rich(q.options[oi], true) + '</span></div>').join('') + '</div>' + (ch == null ? '<div class="note">Bạn bỏ trống câu này.</div>' : '') + qFeedback(q, ch == null ? -1 : ch, ord) + '</div>';
+    $('#rv').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  $('#nx').onclick = next;
+}
+function rRepairIntro(s){
+  app.innerHTML = sessHead() + '<article class="card"><span class="label">Sửa lỗi</span><h2>3 bài yếu nhất sau bài thi</h2><ul class="vlist">' + s.units.map(u => '<li>' + unitTag(u) + ' ' + esc(U[u].title) + '</li>').join('') + '</ul><p class="muted small">Đọc lại ý chính, rồi làm câu mới của từng bài.</p><div class="actions"><button class="btn wide" id="nx">Bắt đầu →</button></div></article>';
+  $('#nx').onclick = next;
+}
+function rTraps(){
+  const top = Object.entries(S.traps).sort((a,b) => b[1]-a[1]).slice(0, 15);
+  app.innerHTML = sessHead() + '<article class="card"><span class="label">Các bẫy bạn hay mắc</span><h2>Đọc chậm từng dòng</h2>' + (top.length ? '<ul class="vlist">' + top.map(([t,n]) => '<li><b>' + esc(t) + '</b> <span class="small muted">· sai ' + n + ' lần</span></li>').join('') + '</ul>' : '<p class="muted">Chưa có bẫy nào lặp lại. Tốt!</p>') + '<div class="actions"><button class="btn wide" id="nx">Tiếp →</button></div></article>';
+  $('#nx').onclick = next;
+}
+function rSheet(){
+  app.innerHTML = sessHead() + '<article class="card"><span class="label">Tờ công thức cuối</span><h2>Đọc kĩ một lượt, rồi đi ngủ sớm</h2><div class="sheetf">' + DB.meta.sheetHtml + '</div><div class="actions"><button class="btn wide" id="nx">Tiếp →</button></div></article>';
+  $('#nx').onclick = next;
+}
+function rDone(){
+  keyHandler = null;
+  const r = S.resume; const t = todayNum();
+  if (!r.extra) { S.sessions[t] = S.sessions[t] || {}; S.sessions[t].done = true; }
+  save();
+  const acc = r.answered ? Math.round(100*r.correct/r.answered) : null;
+  const mins = Math.round((Date.now() - (r.t0||Date.now()))/60000);
+  app.innerHTML = '<article class="card" style="margin-top:12px;text-align:center"><span class="label">Xong buổi hôm nay</span><div class="score" style="color:var(--hema)">' + (acc == null ? '✓' : acc + '%') + '</div><p class="muted">' + r.answered + ' câu · ' + mins + ' phút' + (acc != null ? ' · độ chính xác' : '') + '</p><p>Ngày mai quay lại bấm <b>Học hôm nay</b>. Các câu sai sẽ tự quay lại đúng lúc bạn sắp quên.</p><div class="actions"><button class="btn wide" id="home">Về trang chính</button></div></article>';
+  S.resume.pos = S.resume.steps.length;
+  if (r.extra && S.parked) { if (S.parked.day === t) S.resume = S.parked; S.parked = null; }
+  save();
+  $('#home').onclick = () => { view = 'home'; renderHome(); };
+}
+
+/* ---------- home ---------- */
+function streak(){ let n = 0, t = todayNum(); if (!(S.sessions[t] && S.sessions[t].done)) t--; while (S.sessions[t] && S.sessions[t].done) { n++; t--; } return n; }
+function overall(){ const intro = introduced(); if (!intro.length) return 0; return intro.reduce((a,u) => a + mastery(u), 0) / DB.units.length; }
+function renderHome(){
+  view = 'home'; keyHandler = null; tip.hidden = true;
+  const t = todayNum(); const D = daysLeft(); const plan = planToday();
+  const doneToday = S.sessions[t] && S.sessions[t].done;
+  const R0 = (S.parked && S.parked.day === t) ? S.parked : S.resume;
+  const resuming = R0 && R0.day === t && !R0.extra && R0.pos > 0 && R0.pos < R0.steps.length;
+  let items = '';
+  if (plan.kind === 'learn') {
+    items = plan.units.map(u => '<li>' + unitTag(u) + '<span>' + esc(U[u].title) + (plan.express.includes(u) ? ' <span class="small muted">(rút gọn)</span>' : '') + '</span></li>').join('');
+    const due = dueItems(isQF).length;
+    items = '<li><span class="tag x">ÔN</span><span>' + Math.min(due, scale(35)) + ' câu/thẻ đến hạn ôn</span></li>' + items + '<li><span class="tag x">TÍNH</span><span>Bài tính (D-value, sinh trưởng, đếm tế bào, hiệu suất) + trộn bài</span></li><li><span class="tag x">TỪ</span><span>Từ vựng chuyên ngành của bài mới</span></li>';
+  } else items = '<li><span class="tag x">' + esc(plan.kind.toUpperCase()) + '</span><span>' + esc(KIND_VI[plan.kind]) + '</span></li>';
+  const intro = introduced().length;
+  const acc = (() => { let a = 0, c = 0; Object.values(S.sessions).forEach(s => { a += s.answered||0; c += s.correct||0; }); return a ? Math.round(100*c/a) + '%' : '—'; })();
+  const lastMock = S.mocks.filter(m => !m.mini).slice(-1)[0];
+  app.innerHTML = '<section class="hero"><div class="count"><span class="n">' + Math.max(0, D) + '</span><span class="t">' + (D > 0 ? 'ngày tới kì thi cuối kì · ' + fmtDate(toNum(S.settings.examDate)) : 'Hôm nay là ngày thi. Chúc bạn 10 điểm!') + '</span></div>' +
+    (doneToday && !resuming ? '<div class="plan"><span class="label">Hôm nay</span><div><b>Đã xong buổi học hôm nay.</b> Muốn học thêm thì bấm nút dưới, app chọn phần yếu nhất cho bạn.</div></div><button class="second" id="extra">Luyện thêm 15 phút</button>'
+    : '<button class="go" id="go"><span><span class="big">' + (resuming ? 'Học tiếp' : 'Học hôm nay') + '</span><div class="sub">' + (resuming ? 'Tiếp từ chỗ bạn dừng · ' + R0.pos + '/' + (R0.steps.length-1) : esc(KIND_VI[plan.kind]) + ' · khoảng ' + (S.settings.dailyMin||150) + ' phút') + '</div></span><span class="arrow">→</span></button>' +
+      '<div class="plan"><span class="label">Hôm nay app đã chọn sẵn cho bạn</span><ul>' + items + '</ul></div>') +
+    '<div class="stats"><button class="stat" id="st1"><div class="label">Đã học</div><div class="v">' + intro + '<span class="small muted">/' + DB.units.length + '</span></div><div class="small muted">bài</div></button><div class="stat"><div class="label">Chính xác</div><div class="v">' + acc + '</div><div class="small muted">' + (lastMock ? 'thi thử: ' + lastMock.score.toFixed(1) : 'chưa thi thử') + '</div></div><div class="stat"><div class="label">Chuỗi</div><div class="v">' + streak() + '</div><div class="small muted">ngày liên tiếp</div></div></div>' +
+    '<p class="small muted">Chạm vào từ gạch chân chấm để xem nghĩa tiếng Việt. Phím tắt máy tính: 1–4 chọn đáp án, Enter để tiếp.</p></section>';
+  const go = $('#go'); if (go) go.onclick = () => startSession();
+  const ex = $('#extra'); if (ex) ex.onclick = () => startSession(true);
+  $('#st1').onclick = renderProgress;
+}
+function renderProgress(){
+  view = 'progress'; keyHandler = null;
+  const col = s => ({new:'var(--surface)', weak:'var(--bad-soft)', critical:'var(--bad)', ok:'var(--warn-soft)', mastered:'var(--good-soft)'}[s]);
+  let h = '<section class="hero"><h1 style="font-size:30px">Bản đồ tiến độ</h1><div class="legend"><span><i style="background:var(--surface);border:1px solid var(--line)"></i>Chưa học</span><span><i style="background:var(--bad-soft)"></i>Yếu</span><span><i style="background:var(--bad)"></i>Nguy hiểm</span><span><i style="background:var(--warn-soft)"></i>Tạm ổn</span><span><i style="background:var(--good-soft)"></i>Vững</span></div><div class="heat">';
+  FAMILIES.forEach(f => {
+    const us = DB.units.filter(u => fam(u.id) === f);
+    h += '<div class="fam"><span class="label">' + FAMNAME[f] + '</span><div class="cells">' + us.map(u => { const s = unitState(u.id); return '<button class="cell" title="' + esc(u.title) + '" data-u="' + u.id + '" style="background:' + col(s) + (s==='critical' ? ';color:var(--surface)' : '') + '">' + u.id.slice(-2) + '</button>'; }).join('') + '</div></div>';
+  });
+  h += '</div><div id="uinfo"></div>';
+  const mk = S.mocks;
+  if (mk.length) h += '<div class="plan"><span class="label">Điểm thi thử</span><div class="bars">' + mk.map(m => '<div class="bar"><span>' + (m.mini ? 'Mini ' : 'Lần ' + m.k + ' ') + fmtDate(m.day) + '</span><span class="t"><b style="width:' + (m.score*10) + '%;background:var(--hema)"></b></span><span class="mono">' + m.score.toFixed(1) + '</span></div>').join('') + '</div></div>';
+  const top = Object.entries(S.traps).sort((a,b) => b[1]-a[1]).slice(0, 8);
+  if (top.length) h += '<div class="plan"><span class="label">Bẫy hay mắc</span><ul>' + top.map(([t,n]) => '<li><span class="tag x">' + n + '×</span><span>' + esc(t) + '</span></li>').join('') + '</ul></div>';
+  h += '<button class="second" id="back">← Về trang chính</button></section>';
+  app.innerHTML = h;
+  app.querySelectorAll('[data-u]').forEach(b => b.onclick = () => { const u = b.dataset.u; const m = Math.round(mastery(u)*100); $('#uinfo').innerHTML = '<div class="plan"><div>' + unitTag(u) + ' <b>' + esc(U[u].title) + '</b></div><div class="small muted">Mức thành thạo: ' + m + '% · ' + ({new:'chưa học', weak:'yếu', critical:'nguy hiểm', ok:'tạm ổn', mastered:'vững'})[unitState(u)] + '</div>' + '<button class="linkbtn" id="rl">Đọc bài học →</button></div>'; $('#rl').onclick = () => renderLesson(u); });
+  $('#back').onclick = renderHome;
+}
+
+/* ---------- library ---------- */
+const STVI = {new:'chưa học', weak:'yếu', critical:'nguy hiểm', ok:'tạm ổn', mastered:'vững'};
+function renderLibrary(){
+  view = 'lib'; keyHandler = null; tip.hidden = true;
+  let h = '<section class="hero"><h1 style="font-size:30px">Thư viện bài học</h1><p class="muted small">Đọc trước hoặc xem lại bất kì bài nào. Lịch "Học hôm nay" vẫn tự xếp; bài đã học trước sẽ được bỏ qua trong lịch.</p>';
+  FAMILIES.forEach(f => {
+    const us = DB.units.filter(u => fam(u.id) === f);
+    h += '<div class="fam"><span class="label">' + esc(f) + ' · ' + esc(FAMNAME[f]) + '</span><div style="display:grid;gap:6px">' + us.map(u => { const st_ = unitState(u.id); return '<button class="libunit" data-u="' + u.id + '">' + unitTag(u.id) + '<span>' + esc(u.title) + ' <span class="small muted">· ' + (u.minutes||20) + "'</span></span><span class=\"st " + st_ + '">' + STVI[st_] + '</span></button>'; }).join('') + '</div></div>';
+  });
+  h += '<button class="second" id="back">← Về trang chính</button></section>';
+  app.innerHTML = h;
+  app.querySelectorAll('[data-u]').forEach(b => b.onclick = () => renderLesson(b.dataset.u));
+  $('#back').onclick = renderHome;
+}
+function renderLesson(uid){
+  view = 'lib'; keyHandler = null; tip.hidden = true; tipsOn = true;
+  const u = U[uid]; const b = byUnit[uid];
+  const intro = S.units[uid] && S.units[uid].intro > 0;
+  let h = '<section class="hero"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' + unitTag(uid) + '<span class="label">' + esc(FAMNAME[fam(uid)]) + ' · ' + STVI[unitState(uid)] + '</span></div><h1 style="font-size:28px">' + esc(u.title) + '</h1>';
+  h += '<div class="card hook"><span class="label">Tình huống mở đầu</span><div class="q">' + rich(u.hookVi, true) + '</div></div>';
+  (u.lesson||[]).forEach(x => { h += '<article class="card"><h2 style="font-size:21px">' + rich(x.h, false) + '</h2><div class="lesson">' + md(x.body, true) + '</div></article>'; });
+  if ((u.extension||[]).length) h += '<details class="extbox" open><summary>Mở rộng & thực tế</summary>' + u.extension.map(x => '<h3 style="font-size:17px">' + rich(x.h, false) + '</h3><div class="lesson">' + md(x.body, true) + '</div>').join('') + '</details>';
+  if ((u.keyCards||[]).length) h += '<article class="card"><span class="label">Ý chính (tiếng Anh như đề thi)</span>' + u.keyCards.map(c => '<div><h3 style="font-size:17px">' + esc(c.title) + '</h3><div class="stem" style="font-size:15px">' + richBlock(c.bodyEn, true) + '</div>' + (c.glossVi ? '<div class="gloss">' + rich(c.glossVi, true) + '</div>' : '') + '</div>').join('') + '</article>';
+  if ((u.traps||[]).length) h += '<div class="note"><b>Bẫy hay gặp:</b><ul class="trapl">' + u.traps.map(t => '<li>' + esc(t) + ' ✗</li>').join('') + '</ul></div>';
+  if (b.v.length) h += '<details class="card"><summary>Từ vựng của bài (' + b.v.length + ')</summary><ul class="vlist" style="margin-top:10px">' + b.v.map(i => { const v = DB.vocab[i]; return '<li><div><span class="en">' + esc(v.term) + '</span> — <span class="vi">' + esc(v.vi) + '</span></div><div class="small">' + esc(v.def) + '</div></li>'; }).join('') + '</ul></details>';
+  h += '<p class="small muted">Nguồn: ' + esc(u.source||'') + ' · ' + b.q.length + ' câu hỏi · ' + b.we.length + ' bài giải mẫu</p>';
+  h += '<div class="actions"><button class="btn wide" id="study">' + (intro ? 'Luyện 8 câu bài này' : 'Học bài này ngay (có câu hỏi)') + '</button></div><button class="second" id="back">← Thư viện</button></section>';
+  app.innerHTML = h; window.scrollTo({top:0});
+  $('#back').onclick = renderLibrary;
+  $('#study').onclick = () => {
+    const steps = intro ? pickUnitQs(uid, 8).map(id => ({t:'q', id, blk:'Luyện ' + uid})) : unitSteps(uid, false).map(x => Object.assign(x, {blk:'Học trước ' + uid}));
+    if (!intro) byUnit[uid].we.forEach(w => steps.push({t:'we', id:w, level:0, blk:'Bài tính'}));
+    steps.push({t:'done', blk:'Xong'});
+    startCustom(steps);
+  };
+}
+function startCustom(steps){
+  const t = todayNum();
+  const keep = S.resume && S.resume.day === t && !S.resume.extra && S.resume.pos < S.resume.steps.length ? S.resume : null;
+  S.parked = keep; // resume the daily plan afterwards
+  S.resume = {day:t, steps, pos:0, kind:'extra', extra:true, answered:0, correct:0, t0:Date.now()};
+  if (!S.sessions[t]) S.sessions[t] = {done:false, answered:0, correct:0, kind:'extra'};
+  save(); view = 'session'; renderStep();
+}
+
+/* ---------- settings ---------- */
+function modal(html){ $('#sheet').innerHTML = html; $('#modal').hidden = false; }
+function closeModal(){ $('#modal').hidden = true; }
+$('#modal').onclick = e => { if (e.target.id === 'modal') closeModal(); };
+function renderSettings(){
+  modal('<h2>Cài đặt</h2><div class="field"><label for="exam">Ngày thi cuối kì</label><input type="date" id="exam" value="' + esc(S.settings.examDate) + '"></div><div class="field"><label for="mins">Thời gian mỗi ngày</label><select id="mins">' + [90,120,150,180].map(m => '<option value="' + m + '"' + (m === S.settings.dailyMin ? ' selected' : '') + '>' + m + ' phút</option>').join('') + '</select></div><p class="small muted">Đổi ngày thi thì app tự xếp lại lịch từ hôm nay.</p><div class="actions"><button class="btn" id="saveS">Lưu</button><button class="btn ghost" id="mockNow">Thi thử ngay</button></div><hr style="border:0;border-top:1px solid var(--line);width:100%"><div class="field"><label for="io">Sao lưu tiến độ (sao chép hoặc dán JSON)</label><textarea id="io" spellcheck="false"></textarea></div><div class="actions"><button class="btn ghost" id="exp">Xuất</button><button class="btn ghost" id="imp">Nhập</button><button class="btn ghost" id="reset">Xoá tiến độ</button><button class="btn ghost" id="closeS">Đóng</button></div><div id="smsg" class="small"></div>');
+  $('#saveS').onclick = () => { const d = $('#exam').value; if (d) S.settings.examDate = d; S.settings.dailyMin = +$('#mins').value; if (S.resume && S.resume.day === todayNum() && S.resume.pos === 0) S.resume = null; save(); closeModal(); renderHome(); };
+  $('#mockNow').onclick = () => { closeModal(); startSession('mock'); };
+  $('#exp').onclick = () => { const txt = JSON.stringify(S); $('#io').value = txt; $('#io').select(); try { navigator.clipboard.writeText(txt).then(() => $('#smsg').textContent = 'Đã sao chép vào clipboard.', () => $('#smsg').textContent = 'Đã chọn sẵn, bấm Cmd/Ctrl+C để sao chép.'); } catch(e){ $('#smsg').textContent = 'Đã chọn sẵn, bấm Cmd/Ctrl+C để sao chép.'; } };
+  $('#imp').onclick = () => { try { const s = JSON.parse($('#io').value); if (!s || s.v !== 1 || !s.items) throw 0; S = Object.assign(freshState(), s); save(); closeModal(); renderHome(); } catch(e){ $('#smsg').textContent = 'Dữ liệu không hợp lệ. Dán đúng đoạn JSON đã xuất.'; } };
+  $('#reset').onclick = () => { $('#smsg').innerHTML = 'Xoá toàn bộ tiến độ? Không hoàn tác được. <button class="btn bad" id="rs2" style="min-height:36px">Xoá</button>'; $('#rs2').onclick = () => { S = freshState(); save(); closeModal(); renderHome(); }; };
+  $('#closeS').onclick = closeModal;
+}
+$('#btnSettings').onclick = renderSettings;
+$('#btnProgress').onclick = renderProgress;
+$('#btnLib').onclick = () => { clearInterval(window._mt); renderLibrary(); };
+$('#brand').onclick = () => { clearInterval(window._mt); renderHome(); };
+
+try { renderHome(); } catch(e) { app.innerHTML = '<div class="card"><h2>Dữ liệu tiến độ bị lỗi</h2><p>Bấm để đặt lại tiến độ và mở lại app.</p><button class="btn" id="fix">Đặt lại</button></div>'; $('#fix').onclick = () => { S = freshState(); save(); location.reload(); }; }
+})();
+</script>
