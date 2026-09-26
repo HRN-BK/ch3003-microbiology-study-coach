@@ -417,7 +417,7 @@ q("GRO-04", "concept", 2, "Why is a colony counted as a colony-forming unit (CFU
   ["Colonies always come from exactly one cell", "A colony may arise from a single cell or from a clump or chain of cells", "Colonies contain only dead cells", "CFU is a unit of weight"], 1,
   "Slide 38: khuẩn lạc có thể từ **một tế bào/bào tử** hoặc **một cụm/chuỗi** → đơn vị là CFU.",
   ["Không luôn đúng.", "", "Sai.", "Sai."], ["colony", "CFU"], "One colony always comes from one cell")
-q("GRO-04", "recall", 1, "Which is NOT a criterion of a culture medium listed in the lecture?",
+q("GRO-04", "not", 1, "Which is NOT a criterion of a culture medium listed in the lecture?",
   ["It must contain the right nutrients", "It must initially be sterile", "It must contain an antibiotic", "It should have a properly adjusted pH"], 2,
   "Tiêu chuẩn: đúng dinh dưỡng, đủ ẩm, pH, oxy, **vô trùng ban đầu**, ủ đúng nhiệt độ. Kháng sinh **không** bắt buộc.",
   ["Có.", "Có.", "", "Có."], ["culture medium"], src=S5 + " slide 28")

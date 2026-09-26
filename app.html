@@ -380,7 +380,7 @@ function rich(text, terms, ctx){
     });
   }
   // italic first (may sit inside bold: **a *Genus* b**, ***Genus***), then bold
-  s = s.replace(/(?:(?<=^)|(?<=[^*\w])|(?<=\*\*))\*(?![\s*])([^*\n]+?)(?<![\s*])\*(?=\*\*|[^*\w]|$)/gm, '<i>$1</i>').replace(/\*\*([^*]+?)\*\*/g, '<b>$1</b>');
+  s = s.replace(/(^|[^*\w]|\*\*)\*([^*\s](?:[^*\n]*?[^*\s])?)\*(?=\*\*|[^*\w]|$)/gm, '$1<i>$2</i>').replace(/\*\*([^*]+?)\*\*/g, '<b>$1</b>');
   s = s.replace(/\[(fig|mở rộng|hiệu chỉnh)\]/g, (m, t) => '<span class="badge' + (t === 'mở rộng' ? ' ext' : t === 'hiệu chỉnh' ? ' fix' : '') + '" title="' + (t === 'fig' ? 'Kiến thức từ hình trong slide' : t === 'mở rộng' ? 'Kiến thức mở rộng ngoài slide' : 'Slide có lỗi, đã hiệu chỉnh') + '">' + (t === 'fig' ? 'hình' : t) + '</span>');
   return s;
 }
@@ -633,6 +633,12 @@ function miniItems(n){
 
 /* ---------- session engine ---------- */
 let view = 'home';
+// Keep today's unfinished daily session aside while an extra one (mock, read-ahead, practice) runs.
+function parkDaily(){
+  const t = todayNum(), r = S.resume;
+  if (r && r.day === t && !r.extra && r.pos < r.steps.length) S.parked = r;
+  else if (S.parked && S.parked.day !== t) S.parked = null;
+}
 function startSession(extra){
   const t = todayNum();
   if (!extra && S.parked) { if (S.parked.day === t) S.resume = S.parked; S.parked = null; }
@@ -645,6 +651,7 @@ function startSession(extra){
     if (S.sessions[t] && S.sessions[t].done && !extra) { steps = extraQueue(); plan = {kind:'extra'}; if (!steps) return; }
     else steps = buildQueue(plan);
   }
+  if (extra) parkDaily();
   S.resume = {day:t, steps, pos:0, kind:plan.kind, extra:!!extra || plan.kind==='extra', answered:0, correct:0, t0:Date.now()};
   if (!S.sessions[t]) S.sessions[t] = {done:false, answered:0, correct:0, kind:plan.kind};
   save(); view = 'session'; renderStep();
@@ -677,14 +684,15 @@ function renderStep(){
 function rHook(s){
   const u = U[s.unit]; const pq = u.predictQuestion;
   let h = sessHead() + '<article class="card hook"><div class="row" style="display:flex;gap:8px;align-items:center">' + unitTag(s.unit) + '<span class="label">Tình huống mở đầu</span></div><h2>' + esc(u.title) + '</h2><div class="q">' + rich(u.hookVi, true) + '</div>';
+  const order = shuffle([0,1,2,3]);
   if (pq && pq.options) {
-    h += '<div class="label">Đoán trước (không tính điểm)</div><div class="stem">' + richBlock(pq.stem, true) + '</div><div class="opts" id="opts">' + pq.options.map((o,i) => '<button class="opt" data-i="' + i + '"><span class="k">' + 'ABCD'[i] + '</span><span>' + rich(o, true) + '</span></button>').join('') + '</div><div id="fb"></div>';
+    h += '<div class="label">Đoán trước (không tính điểm)</div><div class="stem">' + richBlock(pq.stem, true) + '</div><div class="opts" id="opts">' + order.map((oi,k) => '<button class="opt" data-i="' + oi + '"><span class="k">' + 'ABCD'[k] + '</span><span>' + rich(pq.options[oi], true) + '</span></button>').join('') + '</div><div id="fb"></div>';
   } else h += '<div class="actions"><button class="btn wide" id="nx">Vào bài →</button></div>';
   app.innerHTML = h + '</article>';
   if (pq && pq.options) {
     app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
       const i = +b.dataset.i;
-      app.querySelectorAll('.opt').forEach((x,j) => { x.disabled = true; if (j === pq.answer) x.classList.add('right'); else if (j === i) x.classList.add('pick'); });
+      app.querySelectorAll('.opt').forEach(x => { const j = +x.dataset.i; x.disabled = true; if (j === pq.answer) x.classList.add('right'); else if (j === i) x.classList.add('pick'); });
       $('#fb').innerHTML = '<div class="fb ' + (i===pq.answer?'ok':'no') + '"><div class="h">' + (i===pq.answer ? 'Đoán đúng!' : 'Chưa đúng — không sao, học xong bạn sẽ hiểu.') + '</div><div>' + rich(pq.explanation||'', true) + '</div></div><div class="actions" style="margin-top:12px"><button class="btn wide" id="nx">Vào bài →</button></div>';
       $('#nx').onclick = next; $('#nx').focus();
     });
@@ -1064,8 +1072,7 @@ function renderLesson(uid){
 }
 function startCustom(steps){
   const t = todayNum();
-  const keep = S.resume && S.resume.day === t && !S.resume.extra && S.resume.pos < S.resume.steps.length ? S.resume : null;
-  S.parked = keep; // resume the daily plan afterwards
+  parkDaily();
   S.resume = {day:t, steps, pos:0, kind:'extra', extra:true, answered:0, correct:0, t0:Date.now()};
   if (!S.sessions[t]) S.sessions[t] = {done:false, answered:0, correct:0, kind:'extra'};
   save(); view = 'session'; renderStep();

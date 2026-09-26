@@ -183,6 +183,9 @@ def main():
     payload = json.dumps(db, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     tpl = open(os.path.join(HERE, 'app.html'), encoding='utf-8').read()
     assert tpl.count('/*__DB__*/') == 1
+    # Safari < 16.4 cannot parse regex lookbehind; one such literal is a SyntaxError that blanks the whole app
+    lb = [n for n, line in enumerate(tpl.split('\n'), 1) if '(?<=' in line or '(?<!' in line]
+    if lb: fail([f'app.html line {n}: regex lookbehind breaks older iPhones (Safari < 16.4)' for n in lb])
     out = tpl.replace('/*__DB__*/', payload)
     open(os.path.join(HERE, 'index.html'), 'w', encoding='utf-8').write(out)
     print(f'OK: {len(units)} units, {len(qs)} Q ({len(mock)} mock), {len(voc)} vocab, {len(wes)} WE, {len(fcs)} cards -> index.html ({len(out)//1024} KB)')

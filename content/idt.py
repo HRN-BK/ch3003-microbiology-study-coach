@@ -32,7 +32,7 @@ unit("IDT-01", "Phenotypic identification: Bergey's Manual, dichotomous keys, bi
 
 | Tập | Năm | Nội dung |
 |---|---|---|
-| 1 | **2001** | **Archaea**, vi khuẩn phân nhánh sớm (deeply branching) & **quang tự dưỡng** |
+| 1 | **2001** | **Archaea, Actinomycetes & photoautotrophs** (đúng chữ slide) [hiệu chỉnh] – tên thật của tập: *The Archaea and the Deeply Branching and Phototrophic Bacteria* |
 | 2 | **2005** | **Proteobacteria** (2A: phương pháp cơ bản; 2B: lớp **Gammaproteobacteria**; 2C: các lớp Proteobacteria khác) |
 | 3 | **2009** | **Firmicutes** |
 | 4 | **2011** | **Bacteroidetes, Spirochaetes, Tenericutes (Mollicutes)**, Acidobacteria, Fibrobacteres, Fusobacteria, … **Chlamydiae, Planctomycetes** |
@@ -174,7 +174,7 @@ v("IDT-01", "diaminopimelic acid", "acid diaminopimelic (DAP)", "A peptidoglycan
 v("IDT-01", "actinomycetes", "xạ khuẩn", "Gram-positive filamentous, spore-forming bacteria such as Streptomyces.", "Actinomycetes form mycelium.", ["Actinobacteria", "Streptomyces"])
 
 fc("IDT-01", "fact", "Bergey's Determinative (1980–84) volumes?", "1 Gram-negative; 2 Gram-positive; 3 remaining + some Gram-neg + archaea; 4 actinomycetes.")
-fc("IDT-01", "fact", "Current Bergey's (5 volumes, 16S)?", "2001 Archaea & photoautotrophs; 2005 Proteobacteria; 2009 Firmicutes; 2011 Bacteroidetes, Spirochaetes, Tenericutes…; 2012 Actinobacteria.")
+fc("IDT-01", "fact", "Current Bergey's (5 volumes, 16S)?", "2001 Archaea, Actinomycetes & photoautotrophs (slide wording); 2005 Proteobacteria; 2009 Firmicutes; 2011 Bacteroidetes, Spirochaetes, Tenericutes…; 2012 Actinobacteria.")
 fc("IDT-01", "fact", "Enterobacteriaceae key rule?", "All oxidase-negative; Escherichia/Enterobacter/Citrobacter ferment lactose (acid + gas), Salmonella/Shigella do not.")
 fc("IDT-01", "fact", "Phenotypic criteria in Bergey's?", "Gram reaction, shape, arrangement, O2 requirement, motility, nutrition/metabolism.")
 fc("IDT-01", "number", "Kit code weights?", "4-2-1 per group of three tests; sum positives.")
